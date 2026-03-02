@@ -76,6 +76,18 @@ class CookieNotice extends CMSPlugin
         $delay      = max(0, (int) $this->params->get('show_delay', 0));
         $position   = (string) $this->params->get('position', 'br');
 
+        // Title with fallback
+        $title = trim((string) $this->params->get('title', ''));
+        if ($title === '' || $title === 'PLG_SYSTEM_COOKIENOTICE_DEFAULT_TITLE') {
+            $langTag = Factory::getApplication()->getLanguage()->getTag();
+            if (strpos($langTag, 'tr') === 0) {
+                $title = 'Çerez alır mıydınız? 🍪';
+            } else {
+                $title = 'Would you like cookies? 🍪';
+            }
+        }
+
+
         // If cookie exists, do nothing
         if (isset($_COOKIE[$cookieName])) {
             return;
@@ -122,6 +134,7 @@ class CookieNotice extends CMSPlugin
 
   <div class="d-flex gap-3 align-items-start">
     <div class="jt-cookie-text flex-grow-1">
+      <div class="jt-cookie-title fw-bold mb-1">' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</div>
       <div class="jt-cookie-message">' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . $policyHtml . '</div>
     </div>
     <button type="button" class="btn-close btn-close-white jt-cookie-close" aria-label="Close"></button>
