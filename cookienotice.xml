@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="system" method="upgrade">
+  <name>PLG_SYSTEM_COOKIENOTICE</name>
+  <version>1.0.12</version>
+  <description>PLG_SYSTEM_COOKIENOTICE_DESCRIPTION</description>
+  <author>Ugur Uygur</author>
+  <authorEmail>info@joomtheme.com</authorEmail>
+  <authorUrl>https://joomtheme.com</authorUrl>
+  <creationDate>2026-03-02</creationDate>
+  <license>GNU General Public License version 2 or later</license>
+
+  <namespace path="src">My\Plugin\System\CookieNotice</namespace>
+
+  <files>
+    <folder plugin="cookienotice">services</folder>
+    <folder>src</folder>
+    <folder>language</folder>
+  </files>
+
+  <languages>
+    <language tag="en-GB">language/en-GB/en-GB.plg_system_cookienotice.ini</language>
+    <language tag="en-GB">language/en-GB/en-GB.plg_system_cookienotice.sys.ini</language>
+    <language tag="tr-TR">language/tr-TR/tr-TR.plg_system_cookienotice.ini</language>
+    <language tag="tr-TR">language/tr-TR/tr-TR.plg_system_cookienotice.sys.ini</language>
+  </languages>
+
+<media folder="media" destination="plg_system_cookienotice">
+  <folder>css</folder>
+  <folder>js</folder>
+</media>
+
+  
+
+  <updateservers>
+    <server type="extension" name="Cookie Notice Plugin Update Server">https://joomtheme.com/updates/plg_system_cookienotice.xml</server>
+  </updateservers>
+
+<config>
+    <fields name="params">
+
+      <!-- ========================= -->
+      <!-- Cookie Settings -->
+      <!-- ========================= -->
+      <fieldset name="basic" label="PLG_SYSTEM_COOKIENOTICE_FIELDSET_COOKIE_SETTINGS">
+
+        <field name="message"
+               type="textarea"
+               label="PLG_SYSTEM_COOKIENOTICE_FIELD_MESSAGE"
+               default="We use cookies to improve site performance and your experience." />
+
+        <field name="policy_url"
+               type="text"
+               label="PLG_SYSTEM_COOKIENOTICE_FIELD_POLICY_URL"
+               default="/privacy-policy" />
+
+        <field name="learn_text"
+               type="text"
+               label="PLG_SYSTEM_COOKIENOTICE_FIELD_LEARN_TEXT"
+               default="Learn more" />
+
+        <field name="accept_text"
+               type="text"
+               label="PLG_SYSTEM_COOKIENOTICE_FIELD_ACCEPT_TEXT"
+               default="Accept" />
+
+        <field name="cookie_name"
+               type="text"
+               label="PLG_SYSTEM_COOKIENOTICE_FIELD_COOKIE_NAME"
+               default="cn_accepted" />
+
+        <field name="days"
+               type="number"
+               label="PLG_SYSTEM_COOKIENOTICE_FIELD_DAYS"
+               default="180"
+               min="1"
+               step="1" />
+
+        <field name="position"
+               type="list"
+               label="PLG_SYSTEM_COOKIENOTICE_FIELD_POSITION"
+               default="br">
+          <option value="br">PLG_SYSTEM_COOKIENOTICE_OPT_BR</option>
+          <option value="bl">PLG_SYSTEM_COOKIENOTICE_OPT_BL</option>
+          <option value="tr">PLG_SYSTEM_COOKIENOTICE_OPT_TR</option>
+          <option value="tl">PLG_SYSTEM_COOKIENOTICE_OPT_TL</option>
+          <option value="bc">PLG_SYSTEM_COOKIENOTICE_OPT_BC</option>
+        </field>
+
+      
+        <field name="show_delay"
+               type="number"
+               label="PLG_SYSTEM_COOKIENOTICE_FIELD_SHOW_DELAY"
+               description="PLG_SYSTEM_COOKIENOTICE_FIELD_SHOW_DELAY_DESC"
+               default="0"
+               min="0"
+               step="100" />
+
+
+<field name="custom_css"
+       type="textarea"
+       label="PLG_SYSTEM_COOKIENOTICE_FIELD_CUSTOM_CSS"
+       description="PLG_SYSTEM_COOKIENOTICE_FIELD_CUSTOM_CSS_DESC"
+       filter="raw"
+       rows="6" />
+</fieldset>
+
+      <!-- ========================= -->
+      <!-- Support / Contact -->
+      <!-- ========================= -->
+      <fieldset name="support" label="PLG_SYSTEM_COOKIENOTICE_FIELDSET_SUPPORT">
+
+        <field name="support_info"
+               type="note"
+               label=""
+               class="alert alert-info"
+               description="PLG_SYSTEM_COOKIENOTICE_SUPPORT_NOTE" />
+
+      </fieldset>
+
+    </fields>
+  </config>
+</extension>
