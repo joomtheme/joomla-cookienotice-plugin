@@ -1,58 +1,56 @@
-/* plg_system_cookienotice - fallback + small enhancements (Bootstrap-friendly) */
+
 .jt-cookie-notice {
-  z-index: 9999;
-  max-width: 520px;
-  width: calc(100vw - 2rem);
+  background: #e7f0ff;
+  color: #1c2b4a;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 700px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border: none;
 }
 
-.jt-cookie-notice.jt-pos-bc {
-  max-width: 900px;
-  width: calc(100vw - 2rem);
+.jt-cookie-message {
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-.jt-cookie-notice .jt-cookie-text a {
+.jt-cookie-actions .btn-primary {
+  background: #4c7df3;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+
+.jt-cookie-actions .btn-secondary {
+  background: transparent;
+  color: #1c2b4a;
+}
+
+/* Always above everything */
+.jt-cookie-notice {
+    z-index: 9999 !important;
+}
+
+/* Prevent overlapping Joomla header */
+.jt-cookie-notice.top-0 {
+    top: 80px !important;
+}
+
+/* Override Bootstrap link-light inside the notice so the policy link stays readable */
+.jt-cookie-notice a,
+.jt-cookie-notice a:visited {
+  color: #2a5bd7 !important;
   text-decoration: underline;
 }
 
-/* Fallback if Bootstrap isn't present */
-.jt-cookie-notice.jt-no-bs {
-  position: fixed;
-  left: 1rem;
-  right: 1rem;
-  bottom: 1rem;
-  background: #212529;
-  color: #fff;
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+.jt-cookie-notice a:hover,
+.jt-cookie-notice a:focus {
+  color: #1f49b8 !important;
+  text-decoration: underline;
 }
 
-.jt-cookie-notice.jt-no-bs .jt-cookie-actions {
-  margin-top: .75rem;
-  display: flex;
-  gap: .5rem;
-  justify-content: flex-end;
-  align-items: center;
+/* If the HTML uses Bootstrap's link-light class, override it here */
+.jt-cookie-notice a.link-light,
+.jt-cookie-notice a.link-light:visited {
+  color: #2a5bd7 !important;
 }
-
-.jt-cookie-notice.jt-no-bs .jt-cookie-accept {
-  border: 0;
-  background: #0d6efd;
-  color: #fff;
-  padding: .45rem .8rem;
-  border-radius: .75rem;
-  cursor: pointer;
-  font-size: .9rem;
-}
-
-.jt-cookie-notice.jt-no-bs .jt-cookie-close {
-  border: 0;
-  background: transparent;
-  color: #fff;
-  opacity: .8;
-  font-size: 1.25rem;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.jt-cookie-notice.jt-no-bs .jt-cookie-close:hover { opacity: 1; }
