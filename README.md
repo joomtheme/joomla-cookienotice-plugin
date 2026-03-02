@@ -22,15 +22,17 @@ It does **NOT provide consent management or GDPR compliance** functionality.
 2. Install via Joomla Extension Manager
 3. Enable the plugin in System Plugins
 
-## Configuration
+## Configuration - Available Options
 
-You can configure:
-
-* Message text
-* Privacy policy link
-* Button labels
-* Banner position
-* Cookie lifetime
+* Message text – Customize the cookie notice message
+* Privacy policy URL – Link to your privacy or cookie policy page
+* Learn more label – Customize the “Learn more” link text
+* Accept button label – Customize the accept button text
+* Cookie name – Define the cookie key used to store consent
+* Cookie duration (days) – Set how long the consent is stored
+* Banner position – Bottom-right, bottom-left, top, or centered
+* Display delay (ms) – Show the notice after a delay
+* Custom CSS – Add your own styling directly from plugin settings
 
 ## License
 
