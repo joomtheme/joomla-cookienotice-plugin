@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+    <update>
+        <name>Cookie Notice</name>
+        <description>Cookie notice plugin for Joomla 6</description>
+        <element>cookienotice</element>
+        <type>plugin</type>
+        <folder>system</folder>
+        <version>1.0.12</version>
+
+        <downloads>
+            <downloadurl type="full" format="zip">
+                https://github.com/joomtheme/joomla-cookienotice-plugin/releases/download/v1.0.12/plg_system_cookienotice_1.0.12.zip
+            </downloadurl>
+        </downloads>
+
+        <targetplatform name="joomla" version="6.*"/>
+    </update>
+</updates>
