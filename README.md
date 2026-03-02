@@ -1,48 +1,85 @@
-# Joomla 6 Cookie Notice Plugin
+# Cookie Notice (Modern UI) for Joomla 6
 
-A lightweight system plugin that displays a simple cookie notice banner on Joomla 6 websites.
-Fully Bootstrap compatible with fallback styling for non-Bootstrap templates.
+A modern, lightweight and user-friendly cookie notice plugin for Joomla.  
+Features a clean **Modern UI design**, Bootstrap compatibility and smart fallbacks for maximum compatibility.
 
-## Features
+---
 
-* Lightweight and fast
-* No tracking scripts
-* No personal data collection
-* Multilingual (EN / TR included)
-* Joomla 6 compatible
-* Bootstrap compatible
+## ✨ Features
 
-## Important
+- 🎨 Modern UI design
+- ⚡ Lightweight and fast
+- 📱 Fully responsive
+- 🧩 Bootstrap 5 compatible (fallback CSS included)
+- 🌍 Multi-language ready
+- 🔧 Custom CSS support
+- ⏱ Display delay control
+- 📍 Flexible banner positioning
+- 🍪 Configurable cookie lifetime
 
-This plugin **only displays a cookie notice message**.
-It does **NOT provide consent management or GDPR compliance** functionality.
+---
 
-## Installation
+## 🆕 What’s new in v1.0.14
 
-1. Download the latest release from GitHub
-2. Install via Joomla Extension Manager
-3. Enable the plugin in System Plugins
+- ➕ Added **bold title support**
+- ➕ Automatic fallback title when field is empty
+- 🛠 Fixed language key appearing instead of title
+- 🛠 Improved rendering stability
+- 🛠 Enhanced Joomla 6 compatibility
 
-## Configuration - Available Options
+---
 
-* Message text – Customize the cookie notice message
-* Privacy policy URL – Link to your privacy or cookie policy page
-* Learn more label – Customize the “Learn more” link text
-* Accept button label – Customize the accept button text
-* Cookie name – Define the cookie key used to store consent
-* Cookie duration (days) – Set how long the consent is stored
-* Banner position – Bottom-right, bottom-left, top, or centered
-* Display delay (ms) – Show the notice after a delay
-* Custom CSS – Add your own styling directly from plugin settings
+## ⚙️ Installation
 
-## Changelog
+1. Go to **Joomla Admin → Extensions → Install**
+2. Upload the plugin ZIP file
+3. Enable **System - Cookie Notice**
+4. Configure settings from plugin options
 
-### v1.0.12
+---
+
+## 🏷 Title Behavior
+
+If the **Title field is left empty**, the plugin automatically displays:
+
+- 🇹🇷 `Çerez alır mıydınız? 🍪`
+- 🇬🇧 `Would you like cookies? 🍪`
+
+You can override it anytime by entering your own custom title.
+
+---
+
+## 🎛 Configuration Options
+
+The plugin provides the following settings:
+
+- Title (optional)
+- Message text
+- Accept button text
+- “Learn more” link
+- Cookie lifetime (days)
+- Banner position
+- Display delay
 - Custom CSS
-- Fixed language issues (TR/EN)
-- Improved frontend rendering and performance
-- Added GPL headers and LICENSE file
 
-## License
+---
 
-GNU General Public License version 2 or later
+## 🧪 Compatibility
+
+- Joomla 6.x ✔ (tested)
+- Bootstrap 5 ✔ (optional, fallback CSS included)
+- Works without Bootstrap ✔
+
+---
+
+## 💡 Design Notes
+
+- Uses Bootstrap styles when available  
+- Falls back to built-in CSS if Bootstrap is not present  
+- Works with most modern Joomla templates  
+
+---
+
+## 📄 License
+
+GPL v2 or later
