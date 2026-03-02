@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="plugin" group="system" method="upgrade" version="6.0">
-
+<extension type="plugin" group="system" method="upgrade">
   <name>PLG_SYSTEM_COOKIENOTICE</name>
-  <version>1.0.12</version>
+  <version>1.0.14</version>
   <description>PLG_SYSTEM_COOKIENOTICE_DESCRIPTION</description>
-
   <author>Ugur Uygur</author>
   <authorEmail>info@joomtheme.com</authorEmail>
   <authorUrl>https://joomtheme.com</authorUrl>
@@ -14,7 +12,7 @@
   <namespace path="src">My\Plugin\System\CookieNotice</namespace>
 
   <files>
-    <folder>services</folder>
+    <folder plugin="cookienotice">services</folder>
     <folder>src</folder>
     <folder>language</folder>
   </files>
@@ -26,19 +24,19 @@
     <language tag="tr-TR">language/tr-TR/tr-TR.plg_system_cookienotice.sys.ini</language>
   </languages>
 
-  <!-- Copies media/css and media/js to /media/plg_system_cookienotice/ -->
-  <media folder="media" destination="plg_system_cookienotice">
-    <folder>css</folder>
-    <folder>js</folder>
-  </media>
+<media folder="media" destination="plg_system_cookienotice">
+  <folder>css</folder>
+  <folder>js</folder>
+</media>
+
 
   <updateservers>
-    <server type="extension" priority="1" name="Cookie Notice Plugin Update Server">
+    <server type="extension" priority="1" name="Cookie Notice Update Server">
       https://raw.githubusercontent.com/joomtheme/joomla-cookienotice-plugin/main/updates.xml
     </server>
   </updateservers>
 
-  <config>
+<config>
     <fields name="params">
 
       <!-- ========================= -->
@@ -89,6 +87,7 @@
           <option value="bc">PLG_SYSTEM_COOKIENOTICE_OPT_BC</option>
         </field>
 
+      
         <field name="show_delay"
                type="number"
                label="PLG_SYSTEM_COOKIENOTICE_FIELD_SHOW_DELAY"
@@ -97,14 +96,14 @@
                min="0"
                step="100" />
 
-        <field name="custom_css"
-               type="textarea"
-               label="PLG_SYSTEM_COOKIENOTICE_FIELD_CUSTOM_CSS"
-               description="PLG_SYSTEM_COOKIENOTICE_FIELD_CUSTOM_CSS_DESC"
-               filter="raw"
-               rows="6" />
 
-      </fieldset>
+<field name="custom_css"
+       type="textarea"
+       label="PLG_SYSTEM_COOKIENOTICE_FIELD_CUSTOM_CSS"
+       description="PLG_SYSTEM_COOKIENOTICE_FIELD_CUSTOM_CSS_DESC"
+       filter="raw"
+       rows="6" />
+</fieldset>
 
       <!-- ========================= -->
       <!-- Support / Contact -->
@@ -121,5 +120,4 @@
 
     </fields>
   </config>
-
 </extension>
