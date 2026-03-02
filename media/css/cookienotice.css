@@ -1,1 +1,58 @@
+/* plg_system_cookienotice - fallback + small enhancements (Bootstrap-friendly) */
+.jt-cookie-notice {
+  z-index: 9999;
+  max-width: 520px;
+  width: calc(100vw - 2rem);
+}
 
+.jt-cookie-notice.jt-pos-bc {
+  max-width: 900px;
+  width: calc(100vw - 2rem);
+}
+
+.jt-cookie-notice .jt-cookie-text a {
+  text-decoration: underline;
+}
+
+/* Fallback if Bootstrap isn't present */
+.jt-cookie-notice.jt-no-bs {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  background: #212529;
+  color: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+.jt-cookie-notice.jt-no-bs .jt-cookie-actions {
+  margin-top: .75rem;
+  display: flex;
+  gap: .5rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.jt-cookie-notice.jt-no-bs .jt-cookie-accept {
+  border: 0;
+  background: #0d6efd;
+  color: #fff;
+  padding: .45rem .8rem;
+  border-radius: .75rem;
+  cursor: pointer;
+  font-size: .9rem;
+}
+
+.jt-cookie-notice.jt-no-bs .jt-cookie-close {
+  border: 0;
+  background: transparent;
+  color: #fff;
+  opacity: .8;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.jt-cookie-notice.jt-no-bs .jt-cookie-close:hover { opacity: 1; }
