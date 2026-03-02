@@ -1,11 +1,4 @@
 <?php
-/**
- * @package     Joomla.Plugin
- * @subpackage  System.cookienotice
- *
- * @license     GNU General Public License version 2 or later
- */
-
 namespace My\Plugin\System\CookieNotice\Extension;
 
 use Joomla\CMS\Factory;
