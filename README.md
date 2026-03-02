@@ -1,6 +1,7 @@
 # Joomla 6 Cookie Notice Plugin
 
 A lightweight system plugin that displays a simple cookie notice banner on Joomla 6 websites.
+Fully Bootstrap compatible with fallback styling for non-Bootstrap templates.
 
 ## Features
 
@@ -33,6 +34,14 @@ It does **NOT provide consent management or GDPR compliance** functionality.
 * Banner position – Bottom-right, bottom-left, top, or centered
 * Display delay (ms) – Show the notice after a delay
 * Custom CSS – Add your own styling directly from plugin settings
+
+## Changelog
+
+### v1.0.12
+- Custom CSS
+- Fixed language issues (TR/EN)
+- Improved frontend rendering and performance
+- Added GPL headers and LICENSE file
 
 ## License
 
