@@ -1,5 +1,10 @@
 # Cookie Notice (Modern UI) for Joomla 6
 
+![Joomla](https://img.shields.io/badge/Joomla-6.x-blue)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple)
+![License](https://img.shields.io/badge/License-GPLv2+-green)
+![Version](https://img.shields.io/badge/Version-1.0.14-orange)
+
 A modern, lightweight and user-friendly cookie notice plugin for Joomla.  
 Features a clean **Modern UI design**, Bootstrap compatibility and smart fallbacks for maximum compatibility.
 
