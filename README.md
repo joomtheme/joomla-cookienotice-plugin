@@ -1,4 +1,4 @@
-# Cookie Notice (Modern UI) for Joomla 6
+# # Smart Cookie Notice for Joomla!
 
 ![Joomla](https://img.shields.io/badge/Joomla-6.x-blue)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple)
