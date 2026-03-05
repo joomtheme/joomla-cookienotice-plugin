@@ -5,86 +5,94 @@
 ![License](https://img.shields.io/badge/License-GPLv2+-green)
 ![Version](https://img.shields.io/badge/Version-1.0.14-orange)
 
-A modern, lightweight and user-friendly cookie notice plugin for Joomla.  
-Features a clean **Modern UI design**, Bootstrap compatibility and smart fallbacks for maximum compatibility.
+A lightweight cookie notice plugin for Joomla 6 that displays a simple cookie notification banner to inform users about cookie usage on your website.
 
----
+Designed to be minimal, fast and non-intrusive while integrating seamlessly with Joomla's core Bootstrap environment.
+
+## ⚠️ Important Notice
+
+This plugin only displays a cookie notice banner.
+
+It does not implement a full consent management system and does not automatically block scripts or manage granular cookie consent required by some privacy regulations (GDPR / ePrivacy).
+
+For full compliance solutions, additional consent management tools may be required.
 
 ## ✨ Features
 
-- 🎨 Modern UI design
-- ⚡ Lightweight and fast
-- 📱 Fully responsive
-- 🧩 Bootstrap 5 compatible (fallback CSS included)
-- 🌍 Multi-language ready
-- 🔧 Custom CSS support
-- ⏱ Display delay control
-- 📍 Flexible banner positioning
-- 🍪 Configurable cookie lifetime
+Simple cookie notification banner
 
----
+Lightweight and fast
 
-## 🆕 What’s new in v1.0.14
+Multilingual ready
 
-- ➕ Added **bold title support**
-- ➕ Automatic fallback title when field is empty
-- 🛠 Fixed language key appearing instead of title
-- 🛠 Improved rendering stability
-- 🛠 Enhanced Joomla 6 compatibility
+Bootstrap compatible
 
----
+Joomla native plugin structure
 
-## ⚙️ Installation
+Customizable message text
 
-1. Go to **Joomla Admin → Extensions → Install**
-2. Upload the plugin ZIP file
-3. Enable **System - Cookie Notice**
-4. Configure settings from plugin options
+Customizable button text
 
----
+Optional cookie expiration settings
 
-## 🏷 Title Behavior
+## 🎯 Use Cases
 
-If the **Title field is left empty**, the plugin automatically displays:
+Inform users that your website uses cookies
 
-- 🇹🇷 `Çerez alır mıydınız? 🍪`
-- 🇬🇧 `Would you like cookies? 🍪`
+Basic privacy transparency
 
-You can override it anytime by entering your own custom title.
+Lightweight alternative to heavy cookie managers
 
----
+Simple compliance notices
 
-## 🎛 Configuration Options
+## ⚙️ Requirements
 
-The plugin provides the following settings:
+Joomla 6.x
 
-- Title (optional)
-- Message text
-- Accept button text
-- “Learn more” link
-- Cookie lifetime (days)
-- Banner position
-- Display delay
-- Custom CSS
+PHP 8.1 or higher
 
----
+Bootstrap 5 (included in Joomla core)
 
-## 🧪 Compatibility
+## 📦 Installation
 
-- Joomla 6.x ✔ (tested)
-- Bootstrap 5 ✔ (optional, fallback CSS included)
-- Works without Bootstrap ✔
+Download the latest release ZIP from the Releases section.
 
----
+Go to Joomla Administrator → Extensions → Install.
 
-## 💡 Design Notes
+Upload the ZIP file.
 
-- Uses Bootstrap styles when available  
-- Falls back to built-in CSS if Bootstrap is not present  
-- Works with most modern Joomla templates  
+Enable the plugin.
 
----
+System → Plugins → JT Cookie Notice
+
+Configure the plugin settings as needed.
+
+## 🔄 Updates
+
+This extension supports Joomla’s native update system.
+
+Update server:
+
+https://raw.githubusercontent.com/joomtheme/joomla-cookienotice-plugin/main/updates.xml
+
+## 🛟 Support
+
+Email: support@joomtheme.com
+
+Documentation: https://joomtheme.com/joomla-support/documents
+
+Contact: https://joomtheme.com/joomla-support/contact
 
 ## 📄 License
 
-GPL v2 or later
+This extension is released under the GNU General Public License version 2 or later (GPL-2.0+).
+
+You are free to use, modify and distribute this software under the terms of the GPL license.
+
+Joomla is a registered trademark of Open Source Matters, Inc.
+This project is not affiliated with or endorsed by them.
+
+You are free to use, modify and distribute this software under the terms of the GPL license.
+
+Joomla is a registered trademark of Open Source Matters, Inc.
+This project is not affiliated with or endorsed by them.
