@@ -3,7 +3,7 @@
 ![Joomla](https://img.shields.io/badge/Joomla-6.x-blue)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple)
 ![License](https://img.shields.io/badge/License-GPLv2+-green)
-![Version](https://img.shields.io/badge/Version-1.0.14-orange)
+![Version](https://img.shields.io/badge/Version-1.0.15-orange)
 
 A lightweight cookie notice plugin for Joomla 6 that displays a simple cookie notification banner to inform users about cookie usage on your website.
 
@@ -66,6 +66,21 @@ Enable the plugin.
 System → Plugins → JT Cookie Notice
 
 Configure the plugin settings as needed.
+
+## 🆕 What’s new in v1.0.15
+
+## Improvements
+- Improved close button visibility on Joomla 6 default templates
+- Banner width optimized to 420px
+- Cookie notice background updated to white for better readability
+
+## Fixes
+- Fixed `.btn-close-white` conflict causing invisible close button
+- Fixed "Learn more" link color being forced to white
+
+## UI
+- Links now inherit Joomla template styling
+- Minor CSS refinements
 
 ## 🔄 Updates
 
