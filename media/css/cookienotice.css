@@ -1,7 +1,5 @@
-/* Fix top positions under Cassiopeia header */
-.jt-cookie-notice.top-0.end-0,
-.jt-cookie-notice.top-0.start-0 {
-    top: 90px !important;
+:root {
+    --jt-cookie-top-offset: 90px;
 }
 
 /* Cookie Notice Container */
@@ -14,6 +12,13 @@
     width: calc(100% - 30px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
     border: none;
+    z-index: 9999;
+}
+
+/* Top position fix */
+.jt-cookie-notice.top-0.end-0,
+.jt-cookie-notice.top-0.start-0 {
+    top: var(--jt-cookie-top-offset) !important;
 }
 
 /* Title */
@@ -78,6 +83,10 @@
 
 /* Mobile */
 @media (max-width: 576px) {
+    :root {
+        --jt-cookie-top-offset: 75px;
+    }
+
     .jt-cookie-notice {
         max-width: none;
         width: calc(100% - 20px);
