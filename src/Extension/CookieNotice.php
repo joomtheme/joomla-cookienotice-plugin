@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package     Joomla.Plugin
+ * @subpackage  System.cookienotice
+ *
+ * @copyright   (C) 2026 Joomtheme
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
 namespace My\Plugin\System\CookieNotice\Extension;
 
 use Joomla\CMS\Factory;
@@ -23,7 +31,7 @@ class CookieNotice extends CMSPlugin
         $cookieName = (string) $this->params->get('cookie_name', 'cn_accepted');
 
         // If cookie exists, do nothing
-        if (isset($_COOKIE[$cookieName])) {
+        if ($app->getInput()->cookie->getString($cookieName, '') !== '') {
             return;
         }
 
@@ -89,7 +97,7 @@ class CookieNotice extends CMSPlugin
 
 
         // If cookie exists, do nothing
-        if (isset($_COOKIE[$cookieName])) {
+        if ($app->getInput()->cookie->getString($cookieName, '') !== '') {
             return;
         }
 
@@ -120,7 +128,7 @@ class CookieNotice extends CMSPlugin
         $policyHtml = '';
         if (trim($policyUrl) !== '') {
             $label = trim($learnText) !== '' ? $learnText : 'Learn more';
-            $policyHtml = ' <a class="link-light small" href="' . htmlspecialchars($policyUrl, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="noopener">'
+            $policyHtml = ' <a class="small" href="' . htmlspecialchars($policyUrl, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="noopener">'
                 . htmlspecialchars($label, ENT_QUOTES, 'UTF-8')
                 . '</a>';
         }
@@ -137,7 +145,7 @@ class CookieNotice extends CMSPlugin
       <div class="jt-cookie-title fw-bold mb-1">' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</div>
       <div class="jt-cookie-message">' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . $policyHtml . '</div>
     </div>
-    <button type="button" class="btn-close btn-close-white jt-cookie-close" aria-label="Close"></button>
+    <button type="button" class="btn-close jt-cookie-close" aria-label="Close"></button>
   </div>
 
   <div class="jt-cookie-actions mt-3 d-flex justify-content-end gap-2">
