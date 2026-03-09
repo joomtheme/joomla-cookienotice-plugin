@@ -1,3 +1,9 @@
+/* Fix top positions under Cassiopeia header */
+.jt-cookie-notice.top-0.end-0,
+.jt-cookie-notice.top-0.start-0 {
+    top: 90px !important;
+}
+
 /* Cookie Notice Container */
 .jt-cookie-notice {
     background: #ffffff;
