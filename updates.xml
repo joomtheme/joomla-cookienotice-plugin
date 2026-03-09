@@ -15,7 +15,7 @@
             </downloadurl>
         </downloads>
 
-        <sha256>sha256:6d048ee236e9a1327240ca14b8c0c0f5900b5e099fa22532e96664799b50d143</sha256>
+        <sha256>6d048ee236e9a1327240ca14b8c0c0f5900b5e099fa22532e96664799b50d143</sha256>
 
         <targetplatform name="joomla" version="6.*"/>
     </update>
