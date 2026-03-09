@@ -19,14 +19,13 @@ Features a clean **Modern UI design**, Bootstrap compatibility and smart fallbac
 
 ---
 
-## 🆕 What’s new in v1.0.15
-
-🛠 Improved close button visibility for Joomla 6 templates
-🛠 Removed .btn-close-white conflict with Joomla default template
-🎨 Cookie banner background updated to white for better readability
-🎨 Improved link styling to inherit Joomla template link colors
-📐 Banner max-width optimized to 420px for better layout
-🧩 Minor CSS refinements and UI improvements
+## 🆕 What’s new in v1.0.16
+- Improved close button visibility on Joomla 6 default templates
+- Fixed `.btn-close-white` conflict
+- Banner width optimized to **420px**
+- Cookie notice background updated to **white**
+- Links now inherit Joomla template styling
+- Minor CSS improvements
 
 ---
 
