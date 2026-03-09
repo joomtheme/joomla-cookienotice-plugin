@@ -1,56 +1,80 @@
-
+/* Cookie Notice Container */
 .jt-cookie-notice {
-  background: #e7f0ff;
-  color: #1c2b4a;
-  border-radius: 12px;
-  padding: 20px;
-  max-width: 700px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  border: none;
+    background: #ffffff;
+    color: #1c2b4a;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 420px;
+    width: calc(100% - 30px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+    border: none;
 }
 
+/* Title */
+.jt-cookie-title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: inherit;
+}
+
+/* Message */
 .jt-cookie-message {
-  font-size: 15px;
-  line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.6;
+    color: inherit;
 }
 
-.jt-cookie-actions .btn-primary {
-  background: #4c7df3;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
+/* Linkler tema stilinden gelsin */
+.jt-cookie-message a:hover {
+    opacity: 0.85;
 }
 
-.jt-cookie-actions .btn-secondary {
-  background: transparent;
-  color: #1c2b4a;
+/* Actions */
+.jt-cookie-actions .btn {
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 14px;
 }
 
-/* Always above everything */
-.jt-cookie-notice {
-    z-index: 9999 !important;
+/* Close button */
+.jt-cookie-notice .btn-close,
+.jt-cookie-notice .btn-close-white {
+    --btn-close-color: #171717;
+    --btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23171717'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e");
+    --btn-close-filter: none;
+    filter: none !important;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
 }
 
-/* Prevent overlapping Joomla header */
-.jt-cookie-notice.top-0 {
-    top: 80px !important;
+.jt-cookie-notice .btn-close:hover,
+.jt-cookie-notice .btn-close-white:hover {
+    opacity: 1;
 }
 
-/* Override Bootstrap link-light inside the notice so the policy link stays readable */
-.jt-cookie-notice a,
-.jt-cookie-notice a:visited {
-  color: #2a5bd7 !important;
-  text-decoration: underline;
+/* Bottom center helper */
+.jt-pos-bc {
+    left: 50%;
 }
 
-.jt-cookie-notice a:hover,
-.jt-cookie-notice a:focus {
-  color: #1f49b8 !important;
-  text-decoration: underline;
+/* No Bootstrap fallback */
+.jt-cookie-notice.jt-no-bs {
+    position: fixed;
+    z-index: 9999;
 }
 
-/* If the HTML uses Bootstrap's link-light class, override it here */
-.jt-cookie-notice a.link-light,
-.jt-cookie-notice a.link-light:visited {
-  color: #2a5bd7 !important;
+.jt-cookie-notice.jt-no-bs .jt-cookie-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .jt-cookie-notice {
+        max-width: none;
+        width: calc(100% - 20px);
+        padding: 18px;
+    }
 }
