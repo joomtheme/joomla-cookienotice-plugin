@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="system" method="upgrade">
   <name>PLG_SYSTEM_COOKIENOTICE</name>
-  <version>1.0.14</version>
+  <version>1.0.15</version>
   <description>PLG_SYSTEM_COOKIENOTICE_DESCRIPTION</description>
   <author>Ugur Uygur</author>
   <authorEmail>info@joomtheme.com</authorEmail>
   <authorUrl>https://joomtheme.com</authorUrl>
-  <creationDate>2026-03-02</creationDate>
+  <creationDate>2026-03-09</creationDate>
   <license>GNU General Public License version 2 or later</license>
+  <copyright>(C) 2026 Joomtheme</copyright>
 
   <namespace path="src">My\Plugin\System\CookieNotice</namespace>
 
