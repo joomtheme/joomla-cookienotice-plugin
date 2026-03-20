@@ -14,7 +14,7 @@
             <downloadurl type="full" format="zip">https://github.com/joomtheme/joomla-cookienotice-plugin/releases/download/v1.0.19/plg_system_cookienotice_1.0.19.zip</downloadurl>
         </downloads>
 
-        <sha256>9f666223cc884f259739f209bb3e17573939ebcb6cec8a4c6f571317d7aa197f</sha256>
+        <sha256>772485b5666b14dffe06bf2dd98fb5f34ad7c11e8ffb38a2d9691aa2b256b884</sha256>
 
         <targetplatform name="joomla" version="6.*"/>
     </update>
