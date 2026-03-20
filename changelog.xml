@@ -10,8 +10,8 @@
             <item>Added CHANGELOG.md for repository and release notes.</item>
         </addition>
         <change>
-            <item>Added explicit &lt;element&gt;cookienotice&lt;/element&gt; to the manifest for clearer update identity.</item>
-            <item>Prepared the release metadata on top of the JED-clean 1.0.18 codebase without runtime behavior changes.</item>
+            <item>Added an explicit manifest element value of cookienotice for clearer update identity.</item>
+            <item>Prepared the release metadata on top of the JED-clean 1.0.18 codebase without frontend behavior changes.</item>
         </change>
         <note>
             <item>This release focuses on update and changelog metadata, not frontend behavior.</item>
@@ -22,8 +22,7 @@
         <type>plugin</type>
         <version>1.0.18</version>
         <fix>
-            <item>Fixed accidental 
- output appearing in the cookie notice markup.</item>
+            <item>Fixed accidental literal backslash-n text appearing in the cookie notice markup.</item>
             <item>Cleaned generated HTML output for stable frontend rendering.</item>
         </fix>
         <change>
