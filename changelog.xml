@@ -5,7 +5,7 @@
         <type>plugin</type>
         <version>1.0.21</version>
         <change>
-            <item>Cleaned up the Support &amp; Contact tab content.</item>
+            <item>Cleaned up the Support and Contact tab content.</item>
             <item>Removed outdated documentation and contact links from the plugin settings.</item>
             <item>Updated package metadata and version information.</item>
         </change>
