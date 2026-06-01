@@ -3,6 +3,39 @@
     <changelog>
         <element>cookienotice</element>
         <type>plugin</type>
+        <version>1.0.21</version>
+        <change>
+            <item>Cleaned up the Support &amp; Contact tab content.</item>
+            <item>Removed outdated documentation and contact links from the plugin settings.</item>
+            <item>Updated package metadata and version information.</item>
+        </change>
+        <note>
+            <item>This is a maintenance and cleanup release with no frontend behavior changes.</item>
+        </note>
+    </changelog>
+
+    <changelog>
+        <element>cookienotice</element>
+        <type>plugin</type>
+        <version>1.0.20</version>
+        <addition>
+            <item>Added JavaScript-side cookie detection for cached pages and CDN/proxy scenarios.</item>
+            <item>Added safer policy URL validation for plugin settings.</item>
+            <item>Added improved keyboard focus styles for cookie notice controls.</item>
+        </addition>
+        <change>
+            <item>Updated package metadata and asset version information for Joomla 6.1.1 compatibility testing.</item>
+            <item>Replaced the close button data URI icon with a CSS-only icon for better CSP compatibility.</item>
+            <item>Documented that the plugin is an informational cookie notice and does not automatically block third-party scripts.</item>
+        </change>
+        <fix>
+            <item>Prevented the notice from being shown again when cached HTML is served to users who already accepted cookies.</item>
+        </fix>
+    </changelog>
+
+    <changelog>
+        <element>cookienotice</element>
+        <type>plugin</type>
         <version>1.0.19</version>
         <addition>
             <item>Added Joomla-compatible changelog.xml for backend release tracking.</item>
@@ -17,6 +50,7 @@
             <item>This release focuses on update and changelog metadata, not frontend behavior.</item>
         </note>
     </changelog>
+
     <changelog>
         <element>cookienotice</element>
         <type>plugin</type>
@@ -30,6 +64,7 @@
             <item>Hardened button and link styling inside plugin CSS.</item>
         </change>
     </changelog>
+
     <changelog>
         <element>cookienotice</element>
         <type>plugin</type>
