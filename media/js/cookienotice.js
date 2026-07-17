@@ -1,40 +1,70 @@
 /* plg_system_cookienotice */
 (function () {
-  function hasBootstrap() {
-    // Bootstrap 5 sets global bootstrap object when bundle is loaded.
-    return typeof window.bootstrap !== "undefined";
+  "use strict";
+
+  function getCookie(name) {
+    var encodedName = encodeURIComponent(name) + "=";
+    var cookies = document.cookie ? document.cookie.split(";") : [];
+
+    for (var i = 0; i < cookies.length; i += 1) {
+      if (cookies[i].trim().indexOf(encodedName) === 0) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   function setCookie(name, value, maxAgeSeconds) {
-    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value)
+    var cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value)
       + "; max-age=" + String(maxAgeSeconds)
       + "; path=/; samesite=lax";
+
+    if (window.location.protocol === "https:") {
+      cookie += "; secure";
+    }
+
+    document.cookie = cookie;
+  }
+
+  function removeBanner(banner) {
+    if (banner && banner.parentNode) {
+      banner.parentNode.removeChild(banner);
+    }
   }
 
   function initBanner(banner) {
     var cookieName = banner.getAttribute("data-cookie-name") || "cn_accepted";
-    var maxAge = parseInt(banner.getAttribute("data-max-age") || "15552000", 10); // 180d
+    var maxAge = parseInt(banner.getAttribute("data-max-age") || "15552000", 10);
     var delay = parseInt(banner.getAttribute("data-delay") || "0", 10);
 
+    if (getCookie(cookieName)) {
+      removeBanner(banner);
+      return;
+    }
+
+    if (!Number.isFinite(maxAge) || maxAge < 1) {
+      maxAge = 15552000;
+    }
+
+    if (!Number.isFinite(delay) || delay < 0) {
+      delay = 0;
+    }
+
     var show = function () {
-      banner.classList.remove("d-none");
-      // If Bootstrap is present and alert has fade, toggle show.
-      if (banner.classList.contains("fade")) {
-        // Force reflow for transition
-        void banner.offsetWidth;
+      if (!getCookie(cookieName)) {
         banner.classList.add("show");
+      } else {
+        removeBanner(banner);
       }
     };
 
     var hide = function () {
-      if (banner.classList.contains("fade")) {
-        banner.classList.remove("show");
-        setTimeout(function () {
-          banner.remove();
-        }, 200);
-      } else {
-        banner.remove();
-      }
+      banner.classList.remove("show");
+
+      window.setTimeout(function () {
+        removeBanner(banner);
+      }, 220);
     };
 
     var acceptBtn = banner.querySelector(".jt-cookie-accept");
@@ -54,20 +84,17 @@
     }
 
     if (delay > 0) {
-      setTimeout(show, delay);
+      window.setTimeout(show, delay);
     } else {
       show();
     }
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    var banner = document.querySelector(".jt-cookie-notice");
-    if (!banner) return;
+    var banners = document.querySelectorAll(".jt-cookie-notice");
 
-    if (!hasBootstrap()) {
-      banner.classList.add("jt-no-bs");
+    for (var i = 0; i < banners.length; i += 1) {
+      initBanner(banners[i]);
     }
-
-    initBanner(banner);
   });
 })();
