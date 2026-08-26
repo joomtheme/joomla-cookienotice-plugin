@@ -1,127 +1,68 @@
-# Smart Cookie Notice for Joomla 6
+# Smart Cookie Consent for Joomla 6
 
-A modern, lightweight and user-friendly cookie notice plugin for Joomla 6.
+Smart Cookie Consent is a lightweight consent-management foundation for Joomla 6.1.x. It provides equal first-layer choices, category preferences, consent withdrawal and opt-in activation of managed scripts and embeds.
 
-Smart Cookie Notice provides a clean modern interface, Bootstrap 5 compatibility, standalone fallback styling and simple configuration options for Joomla websites.
+## Highlights
 
----
+- Joomla subscriber events, dependency injection and Web Asset Manager
+- Layout-based frontend markup
+- Accept all, reject all and granular preferences
+- Necessary, preferences, analytics and marketing categories
+- No non-essential category is enabled by default
+- Reopenable settings and consent withdrawal
+- Consent revision control and timestamped browser record
+- Cache/CDN-safe client-side state handling
+- Configurable category snippets
+- Script, iframe and image activation through `data-cookie-category`
+- Cookie cleanup patterns when a category is withdrawn
+- Keyboard-accessible preferences dialog and reduced-motion support
+- English, Turkish, German and French language files
+- No external JavaScript dependency
 
-## ✨ Features
+## Installation
 
-- 🎨 Modern and clean cookie notice UI
-- ⚡ Lightweight and fast
-- 📱 Fully responsive layout
-- 🧩 Bootstrap 5 compatible
-- 🛡 Standalone fallback CSS included
-- 🌍 Multi-language ready
-- 🔧 Custom CSS support
-- ⏱ Display delay control
-- 📍 Flexible banner positioning
-- 🍪 Configurable cookie lifetime
-- ♿ Improved keyboard focus styles
-- 🔒 CSP-friendly close button styling
+1. Install the ZIP from Joomla Administrator.
+2. Enable **System - Smart Cookie Consent**.
+3. Set the privacy policy URL.
+4. Move every non-essential service into the matching category snippet field, or annotate its markup as described below.
+5. Verify the site with a clean browser profile before release.
 
----
+## Blocking contract
 
-## 🆕 What’s new in v1.0.21
+Code pasted into **Preferences**, **Analytics** or **Marketing snippets** is not inserted into the page until that category has consent.
 
-Maintenance and cleanup release.
+Existing template or extension markup can be held with an explicit annotation:
 
-- Cleaned up the Support & Contact tab
-- Updated package metadata and version information
-- No frontend behavior changes
+```html
+<script type="text/plain" data-cookie-category="analytics" data-cookie-src="https://example.com/analytics.js"></script>
+<iframe data-cookie-category="marketing" data-cookie-src="https://example.com/embed"></iframe>
+```
 
----
+Supported category values are `preferences`, `analytics` and `marketing`. For images, `data-cookie-src` and `data-cookie-srcset` are supported.
 
-## ⚙️ Installation
+The plugin intentionally does not guess whether arbitrary third-party markup is essential. Automatic HTML rewriting is unreliable across Joomla templates and extensions; site owners must classify and route every non-essential service.
 
-1. Go to **Joomla Administrator → Extensions → Install**
-2. Upload the plugin ZIP package
-3. Go to **System → Manage → Plugins**
-4. Search for **System - Cookie Notice**
-5. Enable the plugin
-6. Configure the plugin options as needed
+## JavaScript integration
 
----
+```js
+window.JTCookieConsent.hasConsent('analytics');
+window.JTCookieConsent.openPreferences();
+window.JTCookieConsent.getState();
+window.JTCookieConsent.reset();
+```
 
-## 🏷 Title Behavior
+The document emits `jt:cookie-consent:ready` and `jt:cookie-consent:change` events. The event `detail` is the current consent state, or `null` before a choice.
 
-If the **Title** field is left empty, the plugin automatically displays a translated default title:
+## Updating from 1.0.x
 
-- 🇹🇷 `Çerez alır mıydınız? 🍪`
-- 🇬🇧 `Would you like cookies? 🍪`
+Version 1.1.0 stores structured, category-based consent. The old acknowledgement value is not treated as valid consent, so visitors will be asked to choose again. Existing plugin parameters are retained by Joomla during an upgrade.
 
-You can override the title at any time by entering your own custom text.
+## Compliance scope
 
----
+This plugin supplies technical consent controls; installing it alone does not make a website legally compliant. The site owner remains responsible for classifying services, preventing every non-essential request before consent, maintaining accurate disclosures, choosing an appropriate consent lifetime and applying national rules. Server-side or third-party cookies that JavaScript cannot access may require service-specific deletion or an additional integration.
 
-## 🎛 Configuration Options
+## Compatibility
 
-The plugin includes the following options:
-
-- Title
-- Message text
-- Privacy / policy URL
-- “Learn more” link text
-- Accept button text
-- Cookie name
-- Cookie lifetime in days
-- Banner position
-- Display delay
-- Custom CSS
-
----
-
-## 📍 Banner Positions
-
-Available banner positions:
-
-- Bottom right
-- Bottom left
-- Top right
-- Top left
-- Bottom center
-
----
-
-## 🧪 Compatibility
-
-- Joomla 6.x
-- Tested with Joomla 6.1.1
-- Bootstrap 5 compatible
-- Works with Joomla’s default template
-- Works without Bootstrap using built-in fallback CSS
-
----
-
-## 💡 Design Notes
-
-Smart Cookie Notice uses Bootstrap 5 utility classes when available.
-
-If Bootstrap styling is not available in the active template, the plugin falls back to its own CSS so the notice remains usable and visually consistent.
-
-The plugin is designed to be lightweight and does not require any external JavaScript library.
-
----
-
-## ⚠️ Important Notice
-
-This plugin displays an informational cookie notice and stores the visitor’s acceptance choice in a browser cookie.
-
-It does **not** automatically block third-party scripts, analytics tools, advertising tags or external embeds before consent.
-
-For full GDPR, KVKK or ePrivacy compliance, site owners should review their legal requirements and configure any third-party services accordingly.
-
----
-
-## 📦 Update Server Support
-
-The plugin includes Joomla-compatible update server metadata.
-
-When installed through Joomla, future versions can be detected from the Joomla update system if the update server is enabled and reachable.
-
----
-
-## 📄 License
-
-GNU General Public License version 2 or later.
+- Designed for Joomla 6.1.x
+- Vanilla JavaScript; no Bootstrap requirement
+- GPL-2.0-or-later

@@ -7,12 +7,13 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace My\Plugin\System\CookieNotice\Extension;
+namespace Joomtheme\Plugin\System\CookieNotice\Extension;
 
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Event\Application\AfterRenderEvent;
 use Joomla\CMS\Event\Application\BeforeCompileHeadEvent;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\SubscriberInterface;
 
@@ -30,20 +31,14 @@ final class CookieNotice extends CMSPlugin implements SubscriberInterface
 
     public function registerAssets(BeforeCompileHeadEvent $event): void
     {
-        $app = $event->getApplication();
-
-        if (!$app->isClient('site') || !$this->isHtmlRequest($event->getDocument())) {
-            return;
-        }
-
-        $cookieName = (string) $this->params->get('cookie_name', 'cn_accepted');
-
-        if ($this->hasConsentCookie($cookieName)) {
-            return;
-        }
-
+        $app      = $event->getApplication();
         $document = $event->getDocument();
-        $wa       = $document->getWebAssetManager();
+
+        if (!$app->isClient('site') || !$this->isHtmlRequest($document)) {
+            return;
+        }
+
+        $wa = $document->getWebAssetManager();
 
         $wa->getRegistry()->addExtensionRegistryFile('plg_system_cookienotice');
         $wa->useStyle('plg_system_cookienotice.banner.styles');
@@ -64,56 +59,73 @@ final class CookieNotice extends CMSPlugin implements SubscriberInterface
             return;
         }
 
-        $cookieName = (string) $this->params->get('cookie_name', 'cn_accepted');
+        $body = $app->getBody();
 
-        if ($this->hasConsentCookie($cookieName)) {
+        if (stripos($body, 'data-jt-cookie-consent-root') !== false) {
             return;
         }
 
         $this->loadLanguage();
 
-        $title = trim((string) $this->params->get('title', ''));
+        $days       = min(3650, max(1, (int) $this->params->get('days', 180)));
+        $delay      = min(60000, max(0, (int) $this->params->get('show_delay', 0)));
+        $position   = (string) $this->params->get('position', 'bc');
+        $policyUrl  = $this->getSafePolicyUrl((string) $this->params->get('policy_url', '/privacy-policy'));
+        $cookieName = $this->getCookieName((string) $this->params->get('cookie_name', 'jt_cookie_consent'));
+        $revision   = $this->getConsentRevision((string) $this->params->get('consent_revision', '1'));
 
-        if ($title === '') {
-            $title = Text::_('PLG_SYSTEM_COOKIENOTICE_DEFAULT_TITLE');
-        }
+        $config = [
+            'cookieName'     => $cookieName,
+            'maxAge'         => $days * 86400,
+            'revision'       => $revision,
+            'delay'          => $delay,
+            'showLauncher'   => (bool) $this->params->get('show_reopen', 1),
+            'snippets'       => [
+                'preferences' => trim((string) $this->params->get('preferences_snippets', '')),
+                'analytics'   => trim((string) $this->params->get('analytics_snippets', '')),
+                'marketing'   => trim((string) $this->params->get('marketing_snippets', '')),
+            ],
+            'cleanupCookies' => [
+                'preferences' => $this->getListParam('preferences_cookie_names'),
+                'analytics'   => $this->getListParam('analytics_cookie_names', "_ga\n_ga_*\n_gid\n_gat"),
+                'marketing'   => $this->getListParam('marketing_cookie_names', "_gcl_au\n_fbp\n_fbc"),
+            ],
+        ];
 
-        $message    = (string) $this->params->get('message', 'We use cookies to improve your experience.');
-        $policyUrl  = trim((string) $this->params->get('policy_url', '/privacy-policy'));
-        $learnText  = trim((string) $this->params->get('learn_text', 'Learn more'));
-        $acceptText = trim((string) $this->params->get('accept_text', 'Accept'));
-        $days       = max(1, (int) $this->params->get('days', 180));
-        $delay      = max(0, (int) $this->params->get('show_delay', 0));
-        $position   = (string) $this->params->get('position', 'br');
-        $maxAge     = $days * 86400;
+        $configJson = json_encode(
+            $config,
+            JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+        ) ?: '{}';
 
-        $positionClass  = $this->getPositionClass($position);
-        $policyHtml     = $this->buildPolicyHtml($policyUrl, $learnText);
-        $titleId        = 'jt-cookie-title';
-        $messageId      = 'jt-cookie-message';
-        $closeLabel     = Text::_('PLG_SYSTEM_COOKIENOTICE_CLOSE');
-        $escapedTitle   = htmlspecialchars($title, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-        $escapedMessage = nl2br(htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), false);
-        $escapedCookie  = htmlspecialchars($cookieName, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-        $buttonText     = htmlspecialchars($acceptText !== '' ? $acceptText : 'Accept', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-        $escapedClose   = htmlspecialchars($closeLabel, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $displayData = [
+            'positionClass'        => $this->getPositionClass($position),
+            'title'                => $this->getTextParam('title', 'PLG_SYSTEM_COOKIENOTICE_DEFAULT_TITLE'),
+            'message'              => $this->getTextParam('message', 'PLG_SYSTEM_COOKIENOTICE_DEFAULT_MESSAGE'),
+            'acceptText'           => $this->getTextParam('accept_text', 'PLG_SYSTEM_COOKIENOTICE_ACCEPT_ALL'),
+            'rejectText'           => $this->getTextParam('reject_text', 'PLG_SYSTEM_COOKIENOTICE_REJECT_ALL'),
+            'manageText'           => $this->getTextParam('manage_text', 'PLG_SYSTEM_COOKIENOTICE_MANAGE_PREFERENCES'),
+            'saveText'             => $this->getTextParam('save_text', 'PLG_SYSTEM_COOKIENOTICE_SAVE_PREFERENCES'),
+            'launcherText'         => $this->getTextParam('launcher_text', 'PLG_SYSTEM_COOKIENOTICE_COOKIE_SETTINGS'),
+            'learnText'            => $this->getTextParam('learn_text', 'PLG_SYSTEM_COOKIENOTICE_LEARN_MORE'),
+            'preferencesTitle'     => Text::_('PLG_SYSTEM_COOKIENOTICE_PREFERENCES_TITLE'),
+            'preferencesMessage'   => Text::_('PLG_SYSTEM_COOKIENOTICE_PREFERENCES_MESSAGE'),
+            'necessaryTitle'       => Text::_('PLG_SYSTEM_COOKIENOTICE_NECESSARY_TITLE'),
+            'necessaryDescription' => Text::_('PLG_SYSTEM_COOKIENOTICE_NECESSARY_DESC'),
+            'preferencesCategory'  => Text::_('PLG_SYSTEM_COOKIENOTICE_PREFERENCES_CATEGORY'),
+            'preferencesDesc'      => Text::_('PLG_SYSTEM_COOKIENOTICE_PREFERENCES_DESC'),
+            'analyticsTitle'       => Text::_('PLG_SYSTEM_COOKIENOTICE_ANALYTICS_TITLE'),
+            'analyticsDescription' => Text::_('PLG_SYSTEM_COOKIENOTICE_ANALYTICS_DESC'),
+            'marketingTitle'       => Text::_('PLG_SYSTEM_COOKIENOTICE_MARKETING_TITLE'),
+            'marketingDescription' => Text::_('PLG_SYSTEM_COOKIENOTICE_MARKETING_DESC'),
+            'alwaysActiveText'     => Text::_('PLG_SYSTEM_COOKIENOTICE_ALWAYS_ACTIVE'),
+            'closeText'            => Text::_('PLG_SYSTEM_COOKIENOTICE_CLOSE_PREFERENCES'),
+            'policyUrl'            => $policyUrl,
+            'policyExternal'       => (bool) preg_match('#^(https?:)?//#i', $policyUrl),
+            'configJson'           => $configJson,
+        ];
 
-        $html = <<<HTML
-<div class="jt-cookie-notice {$positionClass}" role="dialog" aria-live="polite" aria-labelledby="{$titleId}" aria-describedby="{$messageId}" data-cookie-name="{$escapedCookie}" data-max-age="{$maxAge}" data-delay="{$delay}">
-  <div class="jt-cookie-layout">
-    <div class="jt-cookie-text">
-      <div id="{$titleId}" class="jt-cookie-title">{$escapedTitle}</div>
-      <div id="{$messageId}" class="jt-cookie-message">{$escapedMessage}{$policyHtml}</div>
-    </div>
-    <button type="button" class="jt-cookie-close" aria-label="{$escapedClose}"></button>
-  </div>
-  <div class="jt-cookie-actions">
-    <button type="button" class="jt-cookie-button jt-cookie-accept">{$buttonText}</button>
-  </div>
-</div>
-HTML;
-
-        $body = $app->getBody();
+        $layout = new FileLayout('banner', dirname(__DIR__, 2) . '/layouts');
+        $html   = $layout->render($displayData);
 
         if (stripos($body, '</body>') !== false) {
             $body = preg_replace('~</body>~i', $html . '</body>', $body, 1) ?? ($body . $html);
@@ -129,9 +141,25 @@ HTML;
         return $document instanceof HtmlDocument;
     }
 
-    private function hasConsentCookie(string $cookieName): bool
+    private function getTextParam(string $name, string $languageKey): string
     {
-        return $this->getApplication()->getInput()->cookie->getString($cookieName, '') !== '';
+        $value = trim((string) $this->params->get($name, ''));
+
+        return $value !== '' ? $value : Text::_($languageKey);
+    }
+
+    private function getCookieName(string $cookieName): string
+    {
+        $cookieName = trim($cookieName);
+
+        return preg_match('/^[A-Za-z0-9._-]{1,80}$/', $cookieName) ? $cookieName : 'jt_cookie_consent';
+    }
+
+    private function getConsentRevision(string $revision): string
+    {
+        $revision = trim($revision);
+
+        return preg_match('/^[A-Za-z0-9._-]{1,40}$/', $revision) ? $revision : '1';
     }
 
     private function getPositionClass(string $position): string
@@ -139,40 +167,41 @@ HTML;
         $allowed = ['br', 'bl', 'tr', 'tl', 'bc'];
 
         if (!in_array($position, $allowed, true)) {
-            $position = 'br';
+            $position = 'bc';
         }
 
         return 'jt-pos-' . $position;
     }
 
-    private function buildPolicyHtml(string $policyUrl, string $learnText): string
+    private function getListParam(string $name, string $default = ''): array
     {
-        $policyUrl = $this->getSafePolicyUrl($policyUrl);
+        $value = trim((string) $this->params->get($name, $default));
 
-        if ($policyUrl === '') {
-            return '';
+        if ($value === '') {
+            return [];
         }
 
-        $label      = $learnText !== '' ? $learnText : 'Learn more';
-        $isExternal = (bool) preg_match('#^(https?:)?//#i', $policyUrl);
-        $target     = $isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+        $items = preg_split('/[\r\n,]+/', $value) ?: [];
+        $items = array_map('trim', $items);
 
-        return ' <a class="jt-cookie-link small" href="' . htmlspecialchars($policyUrl, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '"' . $target . '>'
-            . htmlspecialchars($label, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')
-            . '</a>';
+        return array_values(array_unique(array_filter($items, static fn (string $item): bool => $item !== '')));
     }
 
     private function getSafePolicyUrl(string $policyUrl): string
     {
         $policyUrl = trim($policyUrl);
 
-        if ($policyUrl === '') {
+        if ($policyUrl === '' || preg_match('/[[:cntrl:]]/', $policyUrl)) {
+            return '';
+        }
+
+        if (parse_url($policyUrl) === false) {
             return '';
         }
 
         $scheme = parse_url($policyUrl, PHP_URL_SCHEME);
 
-        if ($scheme !== null && !in_array(strtolower($scheme), ['http', 'https'], true)) {
+        if ($scheme !== null && !in_array(strtolower((string) $scheme), ['http', 'https'], true)) {
             return '';
         }
 

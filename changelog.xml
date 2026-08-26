@@ -1,86 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelogs>
-    <changelog>
-        <element>cookienotice</element>
-        <type>plugin</type>
-        <version>1.0.21</version>
-        <change>
-            <item>Cleaned up the Support and Contact tab content.</item>
-            <item>Removed outdated documentation and contact links from the plugin settings.</item>
-            <item>Updated package metadata and version information.</item>
-        </change>
-        <note>
-            <item>This is a maintenance and cleanup release with no frontend behavior changes.</item>
-        </note>
-    </changelog>
-
-    <changelog>
-        <element>cookienotice</element>
-        <type>plugin</type>
-        <version>1.0.20</version>
-        <addition>
-            <item>Added JavaScript-side cookie detection for cached pages and CDN/proxy scenarios.</item>
-            <item>Added safer policy URL validation for plugin settings.</item>
-            <item>Added improved keyboard focus styles for cookie notice controls.</item>
-        </addition>
-        <change>
-            <item>Updated package metadata and asset version information for Joomla 6.1.1 compatibility testing.</item>
-            <item>Replaced the close button data URI icon with a CSS-only icon for better CSP compatibility.</item>
-            <item>Documented that the plugin is an informational cookie notice and does not automatically block third-party scripts.</item>
-        </change>
-        <fix>
-            <item>Prevented the notice from being shown again when cached HTML is served to users who already accepted cookies.</item>
-        </fix>
-    </changelog>
-
-    <changelog>
-        <element>cookienotice</element>
-        <type>plugin</type>
-        <version>1.0.19</version>
-        <addition>
-            <item>Added Joomla-compatible changelog.xml for backend release tracking.</item>
-            <item>Added manifest changelogurl support for changelog display in Joomla.</item>
-            <item>Added CHANGELOG.md for repository and release notes.</item>
-        </addition>
-        <change>
-            <item>Added an explicit manifest element value of cookienotice for clearer update identity.</item>
-            <item>Prepared the release metadata on top of the JED-clean 1.0.18 codebase without frontend behavior changes.</item>
-        </change>
-        <note>
-            <item>This release focuses on update and changelog metadata, not frontend behavior.</item>
-        </note>
-    </changelog>
-
-    <changelog>
-        <element>cookienotice</element>
-        <type>plugin</type>
-        <version>1.0.18</version>
-        <fix>
-            <item>Fixed accidental literal backslash-n text appearing in the cookie notice markup.</item>
-            <item>Cleaned generated HTML output for stable frontend rendering.</item>
-        </fix>
-        <change>
-            <item>Reduced CSS dependence on Bootstrap utility classes.</item>
-            <item>Hardened button and link styling inside plugin CSS.</item>
-        </change>
-    </changelog>
-
-    <changelog>
-        <element>cookienotice</element>
-        <type>plugin</type>
-        <version>1.0.17</version>
-        <addition>
-            <item>Added missing Title plugin parameter.</item>
-            <item>Added joomla.asset.json and Web Asset Manager registration.</item>
-        </addition>
-        <change>
-            <item>Refactored the plugin to Joomla 6-style SubscriberInterface event handlers.</item>
-            <item>Restricted execution to site HTML documents only.</item>
-            <item>Improved standalone CSS compatibility for templates without Bootstrap utilities.</item>
-        </change>
-        <fix>
-            <item>Added secure cookie handling on HTTPS requests.</item>
-            <item>Improved translated default title and close-label handling.</item>
-        </fix>
-    </changelog>
+  <changelog>
+    <element>cookienotice</element>
+    <type>plugin</type>
+    <version>1.1.0</version>
+    <addition>
+      <item>Added accept all, reject all and category preference controls.</item>
+      <item>Added consent withdrawal, script activation hooks and cookie cleanup patterns.</item>
+      <item>Added a public JavaScript API, lifecycle events, German and French translations.</item>
+    </addition>
+    <change>
+      <item>Moved frontend markup into a Joomla layout.</item>
+      <item>Made consent state handling cache and CDN safe.</item>
+      <item>Updated the extension namespace and Web Asset Manager metadata.</item>
+    </change>
+    <security>
+      <item>Non-essential consent categories now default to denied.</item>
+      <item>Validated cookie names, consent revisions and privacy-policy URL schemes.</item>
+      <item>Adjusted control-character URL validation to avoid a JAMSS hexadecimal-notation false positive.</item>
+    </security>
+  </changelog>
+  <changelog>
+    <element>cookienotice</element>
+    <type>plugin</type>
+    <version>1.0.21</version>
+    <change>
+      <item>Cleaned up the Support and Contact backend note.</item>
+    </change>
+  </changelog>
+  <changelog>
+    <element>cookienotice</element>
+    <type>plugin</type>
+    <version>1.0.20</version>
+    <addition>
+      <item>Added JavaScript-side cookie detection and visible keyboard focus styles.</item>
+    </addition>
+    <fix>
+      <item>Hardened the privacy-policy URL field.</item>
+    </fix>
+  </changelog>
 </changelogs>

@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="system" method="upgrade">
   <name>PLG_SYSTEM_COOKIENOTICE</name>
-  <version>1.0.21</version>
+  <version>1.1.0</version>
   <description>PLG_SYSTEM_COOKIENOTICE_DESCRIPTION</description>
   <element>cookienotice</element>
   <author>JoomTheme</author>
   <authorEmail>support@joomtheme.com</authorEmail>
   <authorUrl>https://joomtheme.com</authorUrl>
-  <creationDate>2026-06-01</creationDate>
+  <creationDate>2026-08-26</creationDate>
   <license>GNU General Public License version 2 or later</license>
   <copyright>(C) 2026 Joomtheme</copyright>
 
-  <namespace path="src">My\Plugin\System\CookieNotice</namespace>
+  <namespace path="src">Joomtheme\Plugin\System\CookieNotice</namespace>
 
   <files>
     <folder plugin="cookienotice">services</folder>
     <folder>src</folder>
+    <folder>layouts</folder>
     <filename>README.md</filename>
     <filename>CHANGELOG.md</filename>
     <filename>LICENSE.txt</filename>
@@ -27,6 +28,10 @@
     <language tag="en-GB">en-GB/en-GB.plg_system_cookienotice.sys.ini</language>
     <language tag="tr-TR">tr-TR/tr-TR.plg_system_cookienotice.ini</language>
     <language tag="tr-TR">tr-TR/tr-TR.plg_system_cookienotice.sys.ini</language>
+    <language tag="de-DE">de-DE/de-DE.plg_system_cookienotice.ini</language>
+    <language tag="de-DE">de-DE/de-DE.plg_system_cookienotice.sys.ini</language>
+    <language tag="fr-FR">fr-FR/fr-FR.plg_system_cookienotice.ini</language>
+    <language tag="fr-FR">fr-FR/fr-FR.plg_system_cookienotice.sys.ini</language>
   </languages>
 
   <media folder="media" destination="plg_system_cookienotice">
@@ -43,101 +48,53 @@
 
   <config>
     <fields name="params">
-      <fieldset name="basic" label="PLG_SYSTEM_COOKIENOTICE_FIELDSET_COOKIE_SETTINGS">
-        <field
-          name="title"
-          type="text"
-          label="PLG_SYSTEM_COOKIENOTICE_FIELD_TITLE"
-          description="PLG_SYSTEM_COOKIENOTICE_FIELD_TITLE_DESC"
-          default=""
-        />
+      <fieldset name="basic" label="PLG_SYSTEM_COOKIENOTICE_FIELDSET_BASIC">
+        <field name="policy_url" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_POLICY_URL" description="PLG_SYSTEM_COOKIENOTICE_FIELD_POLICY_URL_DESC" default="/privacy-policy" />
+        <field name="cookie_name" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_COOKIE_NAME" description="PLG_SYSTEM_COOKIENOTICE_FIELD_COOKIE_NAME_DESC" default="jt_cookie_consent" maxlength="80" />
+        <field name="days" type="number" label="PLG_SYSTEM_COOKIENOTICE_FIELD_DAYS" description="PLG_SYSTEM_COOKIENOTICE_FIELD_DAYS_DESC" default="180" min="1" max="3650" step="1" />
+        <field name="consent_revision" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_CONSENT_REVISION" description="PLG_SYSTEM_COOKIENOTICE_FIELD_CONSENT_REVISION_DESC" default="1" maxlength="40" />
+        <field name="show_reopen" type="radio" layout="joomla.form.field.radio.switcher" label="PLG_SYSTEM_COOKIENOTICE_FIELD_SHOW_REOPEN" description="PLG_SYSTEM_COOKIENOTICE_FIELD_SHOW_REOPEN_DESC" default="1">
+          <option value="0">JNO</option>
+          <option value="1">JYES</option>
+        </field>
+      </fieldset>
 
-        <field
-          name="message"
-          type="textarea"
-          label="PLG_SYSTEM_COOKIENOTICE_FIELD_MESSAGE"
-          default="We use cookies to improve site performance and your experience."
-          rows="4"
-        />
-
-        <field
-          name="policy_url"
-          type="text"
-          label="PLG_SYSTEM_COOKIENOTICE_FIELD_POLICY_URL"
-          default="/privacy-policy"
-        />
-
-        <field
-          name="learn_text"
-          type="text"
-          label="PLG_SYSTEM_COOKIENOTICE_FIELD_LEARN_TEXT"
-          default="Learn more"
-        />
-
-        <field
-          name="accept_text"
-          type="text"
-          label="PLG_SYSTEM_COOKIENOTICE_FIELD_ACCEPT_TEXT"
-          default="Accept"
-        />
-
-        <field
-          name="cookie_name"
-          type="text"
-          label="PLG_SYSTEM_COOKIENOTICE_FIELD_COOKIE_NAME"
-          default="cn_accepted"
-        />
-
-        <field
-          name="days"
-          type="number"
-          label="PLG_SYSTEM_COOKIENOTICE_FIELD_DAYS"
-          default="180"
-          min="1"
-          step="1"
-        />
-
-        <field
-          name="position"
-          type="list"
-          label="PLG_SYSTEM_COOKIENOTICE_FIELD_POSITION"
-          default="br"
-        >
+      <fieldset name="display" label="PLG_SYSTEM_COOKIENOTICE_FIELDSET_DISPLAY">
+        <field name="title" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_TITLE" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" />
+        <field name="message" type="textarea" label="PLG_SYSTEM_COOKIENOTICE_FIELD_MESSAGE" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" rows="4" />
+        <field name="accept_text" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_ACCEPT_TEXT" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" />
+        <field name="reject_text" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_REJECT_TEXT" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" />
+        <field name="manage_text" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_MANAGE_TEXT" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" />
+        <field name="save_text" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_SAVE_TEXT" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" />
+        <field name="launcher_text" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_LAUNCHER_TEXT" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" />
+        <field name="learn_text" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_LEARN_TEXT" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" />
+        <field name="position" type="list" label="PLG_SYSTEM_COOKIENOTICE_FIELD_POSITION" default="bc">
           <option value="br">PLG_SYSTEM_COOKIENOTICE_OPT_BR</option>
           <option value="bl">PLG_SYSTEM_COOKIENOTICE_OPT_BL</option>
           <option value="tr">PLG_SYSTEM_COOKIENOTICE_OPT_TR</option>
           <option value="tl">PLG_SYSTEM_COOKIENOTICE_OPT_TL</option>
           <option value="bc">PLG_SYSTEM_COOKIENOTICE_OPT_BC</option>
         </field>
-
-        <field
-          name="show_delay"
-          type="number"
-          label="PLG_SYSTEM_COOKIENOTICE_FIELD_SHOW_DELAY"
-          description="PLG_SYSTEM_COOKIENOTICE_FIELD_SHOW_DELAY_DESC"
-          default="0"
-          min="0"
-          step="100"
-        />
-
-        <field
-          name="custom_css"
-          type="textarea"
-          label="PLG_SYSTEM_COOKIENOTICE_FIELD_CUSTOM_CSS"
-          description="PLG_SYSTEM_COOKIENOTICE_FIELD_CUSTOM_CSS_DESC"
-          filter="raw"
-          rows="6"
-        />
+        <field name="show_delay" type="number" label="PLG_SYSTEM_COOKIENOTICE_FIELD_SHOW_DELAY" description="PLG_SYSTEM_COOKIENOTICE_FIELD_SHOW_DELAY_DESC" default="0" min="0" max="60000" step="100" />
       </fieldset>
 
-      <fieldset name="support" label="PLG_SYSTEM_COOKIENOTICE_FIELDSET_SUPPORT">
-        <field
-          name="support_info"
-          type="note"
-          label=""
-          class="alert alert-info"
-          description="PLG_SYSTEM_COOKIENOTICE_SUPPORT_NOTE"
-        />
+      <fieldset name="integrations" label="PLG_SYSTEM_COOKIENOTICE_FIELDSET_INTEGRATIONS">
+        <field name="integration_note" type="note" class="alert alert-info" label="" description="PLG_SYSTEM_COOKIENOTICE_INTEGRATION_NOTE" />
+        <field name="preferences_snippets" type="textarea" filter="raw" label="PLG_SYSTEM_COOKIENOTICE_FIELD_PREFERENCES_SNIPPETS" description="PLG_SYSTEM_COOKIENOTICE_FIELD_SNIPPETS_DESC" rows="8" />
+        <field name="analytics_snippets" type="textarea" filter="raw" label="PLG_SYSTEM_COOKIENOTICE_FIELD_ANALYTICS_SNIPPETS" description="PLG_SYSTEM_COOKIENOTICE_FIELD_SNIPPETS_DESC" rows="8" />
+        <field name="marketing_snippets" type="textarea" filter="raw" label="PLG_SYSTEM_COOKIENOTICE_FIELD_MARKETING_SNIPPETS" description="PLG_SYSTEM_COOKIENOTICE_FIELD_SNIPPETS_DESC" rows="8" />
+      </fieldset>
+
+      <fieldset name="cleanup" label="PLG_SYSTEM_COOKIENOTICE_FIELDSET_CLEANUP">
+        <field name="cleanup_note" type="note" class="alert alert-warning" label="" description="PLG_SYSTEM_COOKIENOTICE_CLEANUP_NOTE" />
+        <field name="preferences_cookie_names" type="textarea" label="PLG_SYSTEM_COOKIENOTICE_FIELD_PREFERENCES_COOKIES" description="PLG_SYSTEM_COOKIENOTICE_FIELD_COOKIE_NAMES_DESC" rows="5" />
+        <field name="analytics_cookie_names" type="textarea" label="PLG_SYSTEM_COOKIENOTICE_FIELD_ANALYTICS_COOKIES" description="PLG_SYSTEM_COOKIENOTICE_FIELD_COOKIE_NAMES_DESC" default="_ga&#10;_ga_*&#10;_gid&#10;_gat" rows="5" />
+        <field name="marketing_cookie_names" type="textarea" label="PLG_SYSTEM_COOKIENOTICE_FIELD_MARKETING_COOKIES" description="PLG_SYSTEM_COOKIENOTICE_FIELD_COOKIE_NAMES_DESC" default="_gcl_au&#10;_fbp&#10;_fbc" rows="5" />
+      </fieldset>
+
+      <fieldset name="advanced" label="PLG_SYSTEM_COOKIENOTICE_FIELDSET_ADVANCED">
+        <field name="custom_css" type="textarea" label="PLG_SYSTEM_COOKIENOTICE_FIELD_CUSTOM_CSS" description="PLG_SYSTEM_COOKIENOTICE_FIELD_CUSTOM_CSS_DESC" filter="raw" rows="8" />
+        <field name="support_info" type="note" class="alert alert-info" label="" description="PLG_SYSTEM_COOKIENOTICE_SUPPORT_NOTE" />
       </fieldset>
     </fields>
   </config>

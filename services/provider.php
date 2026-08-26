@@ -3,7 +3,8 @@
  * @package     Joomla.Plugin
  * @subpackage  System.cookienotice
  *
- * @license     GNU General Public License version 2 or later
+ * @copyright   (C) 2026 Joomtheme
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
@@ -14,21 +15,20 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use My\Plugin\System\CookieNotice\Extension\CookieNotice;
+use Joomtheme\Plugin\System\CookieNotice\Extension\CookieNotice;
 
 return new class () implements ServiceProviderInterface
 {
-    public function register(Container $container)
+    public function register(Container $container): void
     {
         $container->set(
             PluginInterface::class,
-            function (Container $container) {
+            static function (Container $container): PluginInterface {
                 $config  = (array) PluginHelper::getPlugin('system', 'cookienotice');
                 $subject = $container->get(DispatcherInterface::class);
-                $app     = Factory::getApplication();
+                $plugin  = new CookieNotice($subject, $config);
 
-                $plugin = new CookieNotice($subject, $config);
-                $plugin->setApplication($app);
+                $plugin->setApplication(Factory::getApplication());
 
                 return $plugin;
             }
