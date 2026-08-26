@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="system" method="upgrade">
-  <name>PLG_SYSTEM_COOKIENOTICE</name>
+  <name>System - Smart Cookie Consent</name>
   <version>1.1.0</version>
   <description>PLG_SYSTEM_COOKIENOTICE_DESCRIPTION</description>
   <element>cookienotice</element>
