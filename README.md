@@ -17,13 +17,14 @@ Smart Cookie Consent is a lightweight consent-management foundation for Joomla 6
 - Cookie cleanup patterns when a category is withdrawn
 - Keyboard-accessible preferences dialog and reduced-motion support
 - English, Turkish, German and French language files
+- Language-specific privacy/cookie policy URLs with a global fallback
 - No external JavaScript dependency
 
 ## Installation
 
 1. Install the ZIP from Joomla Administrator.
 2. Enable **System - Smart Cookie Consent**.
-3. Set the privacy policy URL.
+3. Set the fallback privacy policy URL. For multilingual sites, add language-specific mappings such as `de-DE=/datenschutz` or `fr-FR=/politique-de-confidentialite`.
 4. Move every non-essential service into the matching category snippet field, or annotate its markup as described below.
 5. Verify the site with a clean browser profile before release.
 
@@ -52,6 +53,19 @@ window.JTCookieConsent.reset();
 ```
 
 The document emits `jt:cookie-consent:ready` and `jt:cookie-consent:change` events. The event `detail` is the current consent state, or `null` before a choice.
+
+## Multilingual policy links
+
+The policy link text follows Joomla language strings when its override field is left empty. For the URL, the global **Privacy / Cookie Policy URL** remains the fallback. Optional language-specific mappings can be added one per line using `language-tag=URL`, for example:
+
+```text
+en-GB=/privacy-policy
+de-DE=/datenschutz
+fr-FR=/politique-de-confidentialite
+tr-TR=/gizlilik-politikasi
+```
+
+The active Joomla site language is matched first. A base-language mapping such as `de=/datenschutz` is also accepted when no exact `de-DE` mapping exists. Invalid or unsafe URL schemes are ignored and the validated fallback URL is used instead.
 
 ## Updating from 1.0.x
 

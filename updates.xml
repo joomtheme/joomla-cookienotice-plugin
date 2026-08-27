@@ -7,14 +7,14 @@
         <type>plugin</type>
         <client>site</client>
         <folder>system</folder>
-        <version>1.1.0</version>
+        <version>1.1.1</version>
         <changelogurl>https://raw.githubusercontent.com/joomtheme/joomla-cookienotice-plugin/main/changelog.xml</changelogurl>
 
         <downloads>
-            <downloadurl type="full" format="zip">https://github.com/joomtheme/joomla-cookienotice-plugin/releases/download/v1.1.0/plg_system_cookienotice_1.1.0.zip</downloadurl>
+            <downloadurl type="full" format="zip">https://github.com/joomtheme/joomla-cookienotice-plugin/releases/download/v1.1.1/plg_system_cookienotice_1.1.1.zip</downloadurl>
         </downloads>
 
-        <sha256>72beda8145f783492aec40496b2b1d81b06a5d7edf3631a5dde2542e807af666</sha256>
+        <sha256>a15725aee52570136fbc87195a191b3ff336406db4fe6a8c90c38769d6476b48</sha256>
 
         <targetplatform name="joomla" version="6.*"/>
     </update>

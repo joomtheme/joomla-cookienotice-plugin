@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.1.1 - 2026-08-27
+
+### Added
+
+- Language-specific privacy/cookie policy URL mappings for multilingual Joomla sites.
+- Exact Joomla language-tag matching with optional base-language fallback.
+
+### Changed
+
+- The existing privacy/cookie policy URL is now used as a backward-compatible fallback when no language-specific mapping matches.
+- Updated Web Asset Manager metadata to 1.1.1.
+
+### Security and privacy
+
+- Language-specific policy URLs use the same HTTP/HTTPS and relative-URL validation as the global policy URL. Invalid mappings fall back safely.
+
 ## 1.1.0 - 2026-08-26
 
 ### Added

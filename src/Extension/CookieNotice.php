@@ -70,7 +70,11 @@ final class CookieNotice extends CMSPlugin implements SubscriberInterface
         $days       = min(3650, max(1, (int) $this->params->get('days', 180)));
         $delay      = min(60000, max(0, (int) $this->params->get('show_delay', 0)));
         $position   = (string) $this->params->get('position', 'bc');
-        $policyUrl  = $this->getSafePolicyUrl((string) $this->params->get('policy_url', '/privacy-policy'));
+        $policyUrl  = $this->getPolicyUrl(
+            (string) $this->params->get('policy_url', '/privacy-policy'),
+            (string) $this->params->get('policy_urls_by_language', ''),
+            (string) $app->getLanguage()->getTag()
+        );
         $cookieName = $this->getCookieName((string) $this->params->get('cookie_name', 'jt_cookie_consent'));
         $revision   = $this->getConsentRevision((string) $this->params->get('consent_revision', '1'));
 
@@ -185,6 +189,54 @@ final class CookieNotice extends CMSPlugin implements SubscriberInterface
         $items = array_map('trim', $items);
 
         return array_values(array_unique(array_filter($items, static fn (string $item): bool => $item !== '')));
+    }
+
+    private function getPolicyUrl(string $fallbackUrl, string $languageUrls, string $languageTag): string
+    {
+        $fallbackUrl = $this->getSafePolicyUrl($fallbackUrl);
+        $languageTag = strtolower(trim($languageTag));
+        $urlMap      = [];
+
+        foreach (preg_split('/\R/', $languageUrls) ?: [] as $line) {
+            $line = trim($line);
+
+            if ($line === '' || $line[0] === '#') {
+                continue;
+            }
+
+            $parts = preg_split('/\s*=\s*/', $line, 2);
+
+            if ($parts === false || count($parts) !== 2) {
+                continue;
+            }
+
+            $tag = strtolower(trim($parts[0]));
+            $url = trim($parts[1]);
+
+            if (!preg_match('/^[a-z0-9]{1,8}(?:-[a-z0-9]{1,8})*$/i', $tag)) {
+                continue;
+            }
+
+            $urlMap[$tag] = $url;
+        }
+
+        $candidates = [$languageTag];
+
+        if (str_contains($languageTag, '-')) {
+            $candidates[] = strstr($languageTag, '-', true);
+        }
+
+        foreach ($candidates as $tag) {
+            if (!isset($urlMap[$tag])) {
+                continue;
+            }
+
+            $resolvedUrl = $this->getSafePolicyUrl($urlMap[$tag]);
+
+            return $resolvedUrl !== '' ? $resolvedUrl : $fallbackUrl;
+        }
+
+        return $fallbackUrl;
     }
 
     private function getSafePolicyUrl(string $policyUrl): string

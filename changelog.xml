@@ -3,6 +3,22 @@
   <changelog>
     <element>cookienotice</element>
     <type>plugin</type>
+    <version>1.1.1</version>
+    <addition>
+      <item>Added language-specific privacy and cookie policy URL mappings for multilingual Joomla sites.</item>
+      <item>Added exact language-tag matching with optional base-language fallback.</item>
+    </addition>
+    <change>
+      <item>The existing policy URL remains the backward-compatible fallback when no language-specific mapping matches.</item>
+      <item>Updated Web Asset Manager metadata to 1.1.1.</item>
+    </change>
+    <security>
+      <item>Language-specific policy URLs use the same validated relative or HTTP/HTTPS URL handling as the global fallback.</item>
+    </security>
+  </changelog>
+  <changelog>
+    <element>cookienotice</element>
+    <type>plugin</type>
     <version>1.1.0</version>
     <addition>
       <item>Added accept all, reject all and category preference controls.</item>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="system" method="upgrade">
   <name>System - Smart Cookie Consent</name>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <description>PLG_SYSTEM_COOKIENOTICE_DESCRIPTION</description>
   <element>cookienotice</element>
   <author>JoomTheme</author>
   <authorEmail>support@joomtheme.com</authorEmail>
   <authorUrl>https://joomtheme.com</authorUrl>
-  <creationDate>2026-08-26</creationDate>
+  <creationDate>2026-08-27</creationDate>
   <license>GNU General Public License version 2 or later</license>
   <copyright>(C) 2026 Joomtheme</copyright>
 
@@ -50,6 +50,7 @@
     <fields name="params">
       <fieldset name="basic" label="PLG_SYSTEM_COOKIENOTICE_FIELDSET_BASIC">
         <field name="policy_url" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_POLICY_URL" description="PLG_SYSTEM_COOKIENOTICE_FIELD_POLICY_URL_DESC" default="/privacy-policy" />
+        <field name="policy_urls_by_language" type="textarea" label="PLG_SYSTEM_COOKIENOTICE_FIELD_POLICY_URLS_BY_LANGUAGE" description="PLG_SYSTEM_COOKIENOTICE_FIELD_POLICY_URLS_BY_LANGUAGE_DESC" rows="5" />
         <field name="cookie_name" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_COOKIE_NAME" description="PLG_SYSTEM_COOKIENOTICE_FIELD_COOKIE_NAME_DESC" default="jt_cookie_consent" maxlength="80" />
         <field name="days" type="number" label="PLG_SYSTEM_COOKIENOTICE_FIELD_DAYS" description="PLG_SYSTEM_COOKIENOTICE_FIELD_DAYS_DESC" default="180" min="1" max="3650" step="1" />
         <field name="consent_revision" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_CONSENT_REVISION" description="PLG_SYSTEM_COOKIENOTICE_FIELD_CONSENT_REVISION_DESC" default="1" maxlength="40" />
