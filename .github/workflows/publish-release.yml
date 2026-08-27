@@ -1,0 +1,185 @@
+name: Publish Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_sha256:
+        description: SHA-256 from the tested Build Release Candidate workflow
+        required: true
+        type: string
+      release_title:
+        description: Optional release title (defaults to "vX.Y.Z - Smart Cookie Consent")
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: smart-cookie-consent-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish tested package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Require main branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+            echo "::error::Run this workflow from the main branch."
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate release metadata
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="$(python3 .github/scripts/release.py validate | tail -n 1)"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Refuse an existing tag or release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="v${{ steps.meta.outputs.version }}"
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "::error::Tag $TAG already exists. Bump the extension version before publishing."
+            exit 1
+          fi
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "::error::Release $TAG already exists. Bump the extension version before publishing."
+            exit 1
+          fi
+
+      - name: Rebuild tested package
+        id: package
+        env:
+          EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/release.py build --output-dir dist
+          PACKAGE="dist/plg_system_cookienotice_${{ steps.meta.outputs.version }}.zip"
+          SHA256="$(sha256sum "$PACKAGE" | awk '{print $1}')"
+          EXPECTED="$(printf '%s' "$EXPECTED_SHA256" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+
+          if [ "$SHA256" != "$EXPECTED" ]; then
+            echo "::error::Package SHA-256 does not match the JED-tested candidate."
+            echo "Expected: $EXPECTED"
+            echo "Built:    $SHA256"
+            exit 1
+          fi
+
+          echo "package=$PACKAGE" >> "$GITHUB_OUTPUT"
+          echo "sha256=$SHA256" >> "$GITHUB_OUTPUT"
+
+      - name: Ensure main has not moved
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          REMOTE_MAIN="$(git rev-parse origin/main)"
+          if [ "$REMOTE_MAIN" != "$GITHUB_SHA" ]; then
+            echo "::error::main changed after this workflow started. Build and test a fresh candidate."
+            exit 1
+          fi
+
+      - name: Update Joomla update metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/release.py update-metadata \
+            --version "${{ steps.meta.outputs.version }}" \
+            --sha256 "${{ steps.package.outputs.sha256 }}" \
+            --repository "$GITHUB_REPOSITORY"
+          python3 .github/scripts/release.py release-notes \
+            --version "${{ steps.meta.outputs.version }}" \
+            --output dist/release-notes.md
+
+      - name: Commit metadata and create tag atomically
+        id: git
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.meta.outputs.version }}"
+          TAG="v$VERSION"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add updates.xml
+
+          if git diff --cached --quiet; then
+            echo "::error::updates.xml did not change. Check the release version and metadata."
+            exit 1
+          fi
+
+          git commit -m "Prepare release $TAG"
+          COMMIT_SHA="$(git rev-parse HEAD)"
+          git tag "$TAG" "$COMMIT_SHA"
+          git push --atomic origin HEAD:main "refs/tags/$TAG"
+
+          echo "commit_sha=$COMMIT_SHA" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_RELEASE_TITLE: ${{ inputs.release_title }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.meta.outputs.version }}"
+          TAG="v$VERSION"
+          PACKAGE="${{ steps.package.outputs.package }}"
+          TITLE="$(printf '%s' "$INPUT_RELEASE_TITLE" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+          if [ -z "$TITLE" ]; then
+            TITLE="$TAG - Smart Cookie Consent"
+          fi
+
+          gh release create "$TAG" "$PACKAGE" \
+            --repo "$GITHUB_REPOSITORY" \
+            --verify-tag \
+            --title "$TITLE" \
+            --notes-file dist/release-notes.md
+
+      - name: Verify published asset digest
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.meta.outputs.version }}"
+          PACKAGE_NAME="plg_system_cookienotice_${VERSION}.zip"
+          EXPECTED="sha256:${{ steps.package.outputs.sha256 }}"
+          ACTUAL="$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/v$VERSION" --jq ".assets[] | select(.name == \"$PACKAGE_NAME\") | .digest")"
+
+          if [ "$ACTUAL" != "$EXPECTED" ]; then
+            echo "::error::Published GitHub asset digest does not match the tested package."
+            echo "Expected: $EXPECTED"
+            echo "Actual:   $ACTUAL"
+            exit 1
+          fi
+
+      - name: Release summary
+        shell: bash
+        run: |
+          {
+            echo "## Published v${{ steps.meta.outputs.version }}"
+            echo
+            echo "**Commit:** \`${{ steps.git.outputs.commit_sha }}\`"
+            echo
+            echo "**SHA-256:** \`${{ steps.package.outputs.sha256 }}\`"
+            echo
+            echo "Tag, release asset and updates.xml were created from the tested package."
+          } >> "$GITHUB_STEP_SUMMARY"
