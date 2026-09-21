@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.1.2 - 2026-09-17
+
+### Fixed
+
+- Save and publish the new consent state before cleaning denied-category cookies.
+- Repeat cleanup of saved denied categories on page initialization, before allowed services start. This catches accessible cookies written again during the previous page unload.
+- Match both trailing-slash and non-trailing-slash cookie paths along the current path.
+- Preserve the consent cookie even when a cleanup pattern matches its name.
+- Add Secure to expiry writes on HTTPS.
+- Avoid starting newly allowed services immediately before a withdrawal reload.
+
+### Changed
+
+- Updated manifest and CSS/JS asset versions to 1.1.2.
+- Documented repeated cleanup and the single-integration rule for analytics.
+
 ## 1.1.1 - 2026-08-27
 
 ### Added
