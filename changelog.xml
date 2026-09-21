@@ -3,6 +3,20 @@
   <changelog>
     <element>cookienotice</element>
     <type>plugin</type>
+    <version>1.1.2</version>
+    <fix>
+      <item>Save the new consent state before cleaning denied-category cookies.</item>
+      <item>Repeat cleanup for saved denied categories on page initialization to remove accessible cookies written during the previous page unload.</item>
+      <item>Attempt both trailing-slash and non-trailing-slash paths and protect the consent record from cleanup patterns.</item>
+      <item>Use Secure expiry writes on HTTPS and avoid activating new services immediately before withdrawal reload.</item>
+    </fix>
+    <change>
+      <item>Updated manifest and CSS/JS asset versions to 1.1.2.</item>
+    </change>
+  </changelog>
+  <changelog>
+    <element>cookienotice</element>
+    <type>plugin</type>
     <version>1.1.1</version>
     <addition>
       <item>Added language-specific privacy and cookie policy URL mappings for multilingual Joomla sites.</item>

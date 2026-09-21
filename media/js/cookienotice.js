@@ -139,7 +139,8 @@
     var parts = window.location.pathname.split("/").filter(Boolean);
 
     for (var i = 1; i <= parts.length; i += 1) {
-      paths.push("/" + parts.slice(0, i).join("/") + "/");
+      var path = "/" + parts.slice(0, i).join("/");
+      paths.push(path, path + "/");
     }
 
     return paths;
@@ -175,35 +176,43 @@
           cookie += "; domain=" + domains[j];
         }
 
+        if (window.location.protocol === "https:") {
+          cookie += "; secure";
+        }
+
         document.cookie = cookie + "; samesite=lax";
       }
     }
   }
 
-  function cleanupRevokedCookies(config, previousState, nextState) {
-    if (!previousState) {
-      return false;
+  function hasRevokedCategory(previousState, nextState) {
+    return Boolean(previousState) && CATEGORIES.some(function (category) {
+      return previousState.choices[category] === true && nextState.choices[category] !== true;
+    });
+  }
+
+  function cleanupDeniedCookies(config, state) {
+    // Only act on a valid saved choice; absence of a record is not a withdrawal.
+    if (!state) {
+      return;
     }
 
     var names = visibleCookieNames();
-    var revoked = false;
 
     CATEGORIES.forEach(function (category) {
-      if (previousState.choices[category] !== true || nextState.choices[category] === true) {
+      if (state.choices[category] === true) {
         return;
       }
 
-      revoked = true;
       var patterns = (config.cleanupCookies && config.cleanupCookies[category]) || [];
 
       names.forEach(function (name) {
-        if (patterns.some(function (pattern) { return wildcardMatch(name, pattern); })) {
+        // Never delete our own decision record, even with a broad cleanup pattern.
+        if (name !== config.cookieName && patterns.some(function (pattern) { return wildcardMatch(name, pattern); })) {
           expireCookie(name);
         }
       });
     });
-
-    return revoked;
   }
 
   function copyScript(source) {
@@ -392,15 +401,20 @@
     function saveChoices(choices) {
       var previousState = currentState;
       var nextState = createState(config, choices);
-      var needsReload = cleanupRevokedCookies(config, previousState, nextState);
+      var needsReload = hasRevokedCategory(previousState, nextState);
 
       writeState(config, nextState);
       currentState = nextState;
       hideBanner();
       updateLauncher();
       closePreferences();
-      activateAllowedContent(root, config, currentState);
+      // Do not start newly allowed services on a document that is about to unload.
+      if (!needsReload) {
+        activateAllowedContent(root, config, currentState);
+      }
+
       dispatchConsentEvent("jt:cookie-consent:change", currentState);
+      cleanupDeniedCookies(config, currentState);
 
       if (needsReload) {
         window.location.reload();
@@ -492,6 +506,8 @@
     };
 
     if (currentState) {
+      // A previously loaded service may have written again during page unload.
+      cleanupDeniedCookies(config, currentState);
       activateAllowedContent(root, config, currentState);
       updateLauncher();
     } else {
