@@ -2,6 +2,18 @@
 
 Smart Cookie Consent is a lightweight consent-management foundation for Joomla 6.1.x. It provides equal first-layer choices, category preferences, consent withdrawal and opt-in activation of managed scripts and embeds.
 
+## Current release: 1.1.3
+
+[Download Smart Cookie Consent 1.1.3](https://github.com/joomtheme/joomla-cookienotice-plugin/releases/download/v1.1.3/plg_system_cookienotice_1.1.3.zip) · [Release notes](https://github.com/joomtheme/joomla-cookienotice-plugin/releases/tag/v1.1.3)
+
+Version 1.1.3 introduces an accessible cookie icon launcher with configurable bottom-left/bottom-right positioning and CSS spacing overrides. The consent engine, saved state, cookie cleanup and category behavior are unchanged.
+
+The maintainer confirmed that the release passed JED Checker and site testing, and that updates were received through Joomla's update system. The published ZIP's SHA-256 and all packaged files were also verified against the release commit.
+
+```text
+SHA-256: 4d914503356c03fec279c57af874b7f66b57ceb24d1e415b5713b02f0f137a06
+```
+
 ## Highlights
 
 - Joomla subscriber events, dependency injection and Web Asset Manager
@@ -9,7 +21,8 @@ Smart Cookie Consent is a lightweight consent-management foundation for Joomla 6
 - Accept all, reject all and granular preferences
 - Necessary, preferences, analytics and marketing categories
 - No non-essential category is enabled by default
-- Reopenable settings and consent withdrawal
+- Accessible inline cookie icon to reopen settings and withdraw consent
+- Configurable launcher corner and CSS x/y offsets
 - Consent revision control and timestamped browser record
 - Cache/CDN-safe client-side state handling
 - Configurable category snippets
@@ -22,7 +35,7 @@ Smart Cookie Consent is a lightweight consent-management foundation for Joomla 6
 
 ## Installation
 
-1. Install the ZIP from Joomla Administrator.
+1. Download the installable `plg_system_cookienotice_1.1.3.zip` release asset and install it from Joomla Administrator.
 2. Enable **System - Smart Cookie Consent**.
 3. Set the fallback privacy policy URL. For multilingual sites, add language-specific mappings such as `de-DE=/datenschutz` or `fr-FR=/politique-de-confidentialite`.
 4. Move every non-essential service into the matching category snippet field, or annotate its markup as described below.
@@ -91,6 +104,10 @@ The x offset is measured from the selected physical edge, including on RTL pages
 - Check Tab focus outline, dialog focus return and Escape, forced-colors/high-contrast mode and reduced-motion preference.
 - Run JED Checker on the installable ZIP and test installation/update plus frontend behavior on a real Joomla 6.1.x demo site before publishing.
 
+## Updating from 1.1.2
+
+Use Joomla's extension update system or install the 1.1.3 release ZIP over the existing installation. Existing plugin settings and valid consent choices are retained. The existing `launcher_text` value now supplies the icon button's accessible name. Clear page/CDN caches after updating and confirm the CSS/JS assets load with version 1.1.3.
+
 ## Updating from 1.0.x
 
 Version 1.1.0 stores structured, category-based consent. The old acknowledgement value is not treated as valid consent, so visitors will be asked to choose again. Existing plugin parameters are retained by Joomla during an upgrade.
@@ -116,12 +133,8 @@ Use one integration method per service: either the category snippet field OR ann
 
 Version 1.1.2 is a patch update: the consent schema and revision are unchanged. Existing valid choices are retained. The reset() API continues to remove the consent record and reopen the choice on reload; use the preference controls to withdraw consent and invoke the withdrawal cleanup flow.
 
-### Release candidate verification
+### Historical validation: 1.1.2
 
-The delivered package was checked with JavaScript regression tests using a simulated cookie jar and DOM/API stubs. These tests reproduce a late cookie write at reload, but do not reproduce Michael's exact Firefox session. PHP files are unchanged. No real Joomla/Firefox integration test or JED Checker run for 1.1.2 was performed in this environment.
+The 1.1.2 development checks reported 17/17 controlled JavaScript scenarios passing with a simulated cookie jar and DOM/API stubs, including the late-write cleanup regression. XML/JSON, manifest paths, language key parity and asset versions were checked. These results describe the 1.1.2 cleanup work; they are not a claim that every browser or integration has been tested.
 
-On a test site, install over 1.1.1, clear page/CDN caches and confirm cookienotice.js is loaded with version 1.1.2. Test accept Analytics, then withdraw: after reload, _ga and _ga_* should be absent and consent should remain denied. Also install over an already-denied record with a leftover GA cookie and reload. Verify allowed categories retain their own cookies, rejected categories do not activate, and first-time visitors still receive the choice. Test non-trailing-slash paths and repeat in Firefox. Inspect Network through withdrawal/reload with Preserve log enabled. Test with one GA integration, not duplicate loaders.
-
-The GitHub update server and release publication are separate steps; this local package does not publish a release or change updates.xml remotely.
-
-Regression result: 17/17 controlled scenarios passed, including the same simulated late-write case failing cleanup on 1.1.1 and passing on 1.1.2. XML/JSON, manifest paths, four-language key parity and asset versions were checked. All PHP files remain byte-identical to the supplied 1.1.1 JED package.
+For site-specific regression testing, accept Analytics, then withdraw consent and reload. Verify that accessible `_ga` and `_ga_*` cookies are removed, consent remains denied, and allowed categories retain their cookies. Repeat on non-trailing-slash paths and in Firefox, using a single consent-controlled analytics integration.
