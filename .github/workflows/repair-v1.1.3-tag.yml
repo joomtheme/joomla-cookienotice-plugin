@@ -1,0 +1,52 @@
+name: Repair v1.1.3 release tag
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/repair-v1.1.3-tag.yml]
+permissions:
+  contents: write
+concurrency:
+  group: repair-v1.1.3-release-tag
+  cancel-in-progress: false
+jobs:
+  repair:
+    if: github.event.head_commit.message == 'Repair v1.1.3 release tag'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: c42e0600f1509d7b2790125b6de36c1ca01055d8
+          fetch-depth: 0
+      - name: Verify tested release asset and source files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release download v1.1.3 --repo joomtheme/joomla-cookienotice-plugin --pattern plg_system_cookienotice_1.1.3.zip --dir /tmp/release-check
+          echo '4d914503356c03fec279c57af874b7f66b57ceb24d1e415b5713b02f0f137a06  /tmp/release-check/plg_system_cookienotice_1.1.3.zip' | sha256sum --check
+          python3 - <<'PY'
+          import pathlib, zipfile
+          with zipfile.ZipFile('/tmp/release-check/plg_system_cookienotice_1.1.3.zip') as archive:
+              files = [entry for entry in archive.infolist() if not entry.is_dir()]
+              assert files, 'Empty release asset'
+              for entry in files:
+                  path = pathlib.Path(entry.filename)
+                  assert not path.is_absolute() and '..' not in path.parts, entry.filename
+                  assert path.read_bytes() == archive.read(entry), entry.filename
+              print(f'All {len(files)} release files match the target commit')
+          PY
+      - name: Move only the known old tag to the release commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED_OLD=b1a9654ae3c266e13c4f0387aa75462aaa8aae6d
+          TARGET=c42e0600f1509d7b2790125b6de36c1ca01055d8
+          ACTUAL="$(git ls-remote origin refs/tags/v1.1.3 | cut -f1)"
+          if [ "$ACTUAL" = "$TARGET" ]; then
+            echo 'Tag already points to the intended commit.'
+            exit 0
+          fi
+          test "$ACTUAL" = "$EXPECTED_OLD"
+          git push --force-with-lease="refs/tags/v1.1.3:$EXPECTED_OLD" origin "$TARGET:refs/tags/v1.1.3"
+          test "$(git ls-remote origin refs/tags/v1.1.3 | cut -f1)" = "$TARGET"
