@@ -97,12 +97,16 @@ The x offset is measured from the selected physical edge, including on RTL pages
 
 ### Manual Joomla 6.1.x release checklist
 
-- Install 1.1.3 over 1.1.2 on a staging site; confirm existing consent records and plugin settings persist, and confirm the CSS asset loads at 1.1.3.
-- Test a first-time visitor, then accept, reject, save category preferences, reopen by mouse and Enter/Space, withdraw consent and reload. Verify category activation and cookie cleanup still behave as in 1.1.2.
-- Set a custom `launcher_text` in each relevant language; inspect the button's accessible name with a screen reader or accessibility inspector. Verify the translated default when the field is blank.
-- Switch both launcher corners; test LTR and RTL pages, 320 px mobile width, zoom at 200%, landscape and a page with Joomla Accessibility or another fixed widget. Adjust x/y CSS overrides in the template where required.
-- Check Tab focus outline, dialog focus return and Escape, forced-colors/high-contrast mode and reduced-motion preference.
-- Run JED Checker on the installable ZIP and test installation/update plus frontend behavior on a real Joomla 6.1.x demo site before publishing.
+**Completed for 1.1.3 — confirmed by the maintainer on 2026-09-24.**
+
+- [x] Upgraded from 1.1.2 to 1.1.3; verified existing consent records and plugin settings persist, and the CSS asset loads at version 1.1.3.
+- [x] Tested first-time visits, accept, reject, category preference saving, reopening by mouse and Enter/Space, consent withdrawal and reload; verified category activation and cookie cleanup.
+- [x] Verified custom `launcher_text` accessible names in the relevant languages and the translated default when the field is blank.
+- [x] Tested both launcher corners, LTR/RTL, 320 px mobile width, 200% zoom, landscape, fixed accessibility controls and x/y CSS overrides.
+- [x] Verified Tab focus outline, dialog focus return, Escape, forced-colors/high-contrast mode and reduced-motion preference.
+- [x] Passed JED Checker and verified installation/update and frontend behavior on the Joomla demo site.
+
+These checks record the maintainer's 1.1.3 site tests and can be repeated for future releases.
 
 ## Updating from 1.1.2
 
