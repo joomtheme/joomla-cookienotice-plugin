@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="system" method="upgrade">
   <name>System - Smart Cookie Consent</name>
-  <version>1.1.2</version>
+  <version>1.1.3</version>
   <description>PLG_SYSTEM_COOKIENOTICE_DESCRIPTION</description>
   <element>cookienotice</element>
   <author>JoomTheme</author>
   <authorEmail>support@joomtheme.com</authorEmail>
   <authorUrl>https://joomtheme.com</authorUrl>
-  <creationDate>2026-09-17</creationDate>
+  <creationDate>2026-09-24</creationDate>
   <license>GNU General Public License version 2 or later</license>
   <copyright>(C) 2026 Joomtheme</copyright>
 
@@ -67,7 +67,11 @@
         <field name="reject_text" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_REJECT_TEXT" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" />
         <field name="manage_text" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_MANAGE_TEXT" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" />
         <field name="save_text" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_SAVE_TEXT" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" />
-        <field name="launcher_text" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_LAUNCHER_TEXT" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" />
+        <field name="launcher_text" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_LAUNCHER_TEXT" description="PLG_SYSTEM_COOKIENOTICE_FIELD_LAUNCHER_TEXT_DESC" default="" />
+        <field name="launcher_position" type="list" label="PLG_SYSTEM_COOKIENOTICE_FIELD_LAUNCHER_POSITION" description="PLG_SYSTEM_COOKIENOTICE_FIELD_LAUNCHER_POSITION_DESC" default="left">
+          <option value="left">PLG_SYSTEM_COOKIENOTICE_OPT_LAUNCHER_LEFT</option>
+          <option value="right">PLG_SYSTEM_COOKIENOTICE_OPT_LAUNCHER_RIGHT</option>
+        </field>
         <field name="learn_text" type="text" label="PLG_SYSTEM_COOKIENOTICE_FIELD_LEARN_TEXT" description="PLG_SYSTEM_COOKIENOTICE_FIELD_TEXT_OVERRIDE_DESC" default="" />
         <field name="position" type="list" label="PLG_SYSTEM_COOKIENOTICE_FIELD_POSITION" default="bc">
           <option value="br">PLG_SYSTEM_COOKIENOTICE_OPT_BR</option>

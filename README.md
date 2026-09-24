@@ -67,6 +67,30 @@ tr-TR=/gizlilik-politikasi
 
 The active Joomla site language is matched first. A base-language mapping such as `de=/datenschutz` is also accepted when no exact `de-DE` mapping exists. Invalid or unsafe URL schemes are ignored and the validated fallback URL is used instead.
 
+## Settings launcher (1.1.3)
+
+After a saved choice, the 48 px cookie icon opens the existing preferences dialog. The icon is embedded from [Bootstrap Icons](https://icons.getbootstrap.com/icons/cookie/) (MIT licensed), with no external dependency. **Cookie Settings Accessible Name** retains the existing `launcher_text` parameter and its language fallback; it now supplies the button's `aria-label` instead of visible text. The saved consent format and categories are unchanged.
+
+Select **Bottom left** (default) or **Bottom right** under **Cookie Settings Icon Position**. The default bottom offset is 72 px to leave space for common fixed accessibility controls. Templates may adjust horizontal and vertical spacing independently:
+
+```css
+:root {
+    --jt-cookie-launcher-x: 20px;
+    --jt-cookie-launcher-y: 96px;
+}
+```
+
+The x offset is measured from the selected physical edge, including on RTL pages; the y offset is measured from the bottom. Check the actual accessibility widget and other fixed controls on both desktop and mobile, and increase offsets as needed. The icon remains keyboard focusable and has a visible focus outline; forced-colors mode uses system colors.
+
+### Manual Joomla 6.1.x release checklist
+
+- Install 1.1.3 over 1.1.2 on a staging site; confirm existing consent records and plugin settings persist, and confirm the CSS asset loads at 1.1.3.
+- Test a first-time visitor, then accept, reject, save category preferences, reopen by mouse and Enter/Space, withdraw consent and reload. Verify category activation and cookie cleanup still behave as in 1.1.2.
+- Set a custom `launcher_text` in each relevant language; inspect the button's accessible name with a screen reader or accessibility inspector. Verify the translated default when the field is blank.
+- Switch both launcher corners; test LTR and RTL pages, 320 px mobile width, zoom at 200%, landscape and a page with Joomla Accessibility or another fixed widget. Adjust x/y CSS overrides in the template where required.
+- Check Tab focus outline, dialog focus return and Escape, forced-colors/high-contrast mode and reduced-motion preference.
+- Run JED Checker on the installable ZIP and test installation/update plus frontend behavior on a real Joomla 6.1.x demo site before publishing.
+
 ## Updating from 1.0.x
 
 Version 1.1.0 stores structured, category-based consent. The old acknowledgement value is not treated as valid consent, so visitors will be asked to choose again. Existing plugin parameters are retained by Joomla during an upgrade.

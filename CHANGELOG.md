@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.3 - 2026-09-24
+
+### Changed
+
+- Replace the text settings launcher with an inline Bootstrap Icons cookie SVG and keep `launcher_text` as its accessible name.
+- Add bottom-left/bottom-right launcher positioning and CSS x/y offset overrides without changing saved consent or category behavior.
+- Bump manifest and asset versions to 1.1.3 for cache invalidation.
+
 ## 1.1.2 - 2026-09-17
 
 ### Fixed

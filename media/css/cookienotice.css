@@ -124,11 +124,38 @@
 .jt-cookie-launcher {
     position: fixed;
     z-index: 9997;
-    inset-inline-start: var(--jt-cookie-offset);
-    bottom: var(--jt-cookie-offset);
-    min-height: 38px;
-    padding: 8px 12px;
+    bottom: var(--jt-cookie-launcher-y, 72px);
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    min-height: 48px;
+    padding: 0;
+    border-radius: 50%;
     box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16);
+}
+
+.jt-cookie-launcher-left {
+    left: var(--jt-cookie-launcher-x, 16px);
+}
+
+.jt-cookie-launcher-right {
+    right: var(--jt-cookie-launcher-x, 16px);
+}
+
+.jt-cookie-launcher svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+@media (forced-colors: active) {
+    .jt-cookie-launcher {
+        border-color: ButtonText;
+        color: ButtonText;
+        background: ButtonFace;
+        box-shadow: none;
+    }
 }
 
 .jt-cookie-backdrop {

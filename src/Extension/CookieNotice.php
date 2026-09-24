@@ -103,6 +103,7 @@ final class CookieNotice extends CMSPlugin implements SubscriberInterface
 
         $displayData = [
             'positionClass'        => $this->getPositionClass($position),
+            'launcherPositionClass' => $this->params->get('launcher_position', 'left') === 'right' ? 'jt-cookie-launcher-right' : 'jt-cookie-launcher-left',
             'title'                => $this->getTextParam('title', 'PLG_SYSTEM_COOKIENOTICE_DEFAULT_TITLE'),
             'message'              => $this->getTextParam('message', 'PLG_SYSTEM_COOKIENOTICE_DEFAULT_MESSAGE'),
             'acceptText'           => $this->getTextParam('accept_text', 'PLG_SYSTEM_COOKIENOTICE_ACCEPT_ALL'),
