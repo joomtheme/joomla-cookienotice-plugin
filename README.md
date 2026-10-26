@@ -2,6 +2,10 @@
 
 Smart Cookie Consent is a lightweight consent-management foundation for Joomla 6.1.x. It provides equal first-layer choices, category preferences, consent withdrawal and opt-in activation of managed scripts and embeds.
 
+## Development candidate: 1.1.4
+
+Lowers the launcher to 16 px with safe-area spacing and fixes delayed banner visibility and initial dialog focus trapping. Existing consent and CSS offset overrides are retained. `updates.xml` continues to point to the published 1.1.3 release until a tested 1.1.4 package is published.
+
 ## Current release: 1.1.3
 
 [Download Smart Cookie Consent 1.1.3](https://github.com/joomtheme/joomla-cookienotice-plugin/releases/download/v1.1.3/plg_system_cookienotice_1.1.3.zip) · [Release notes](https://github.com/joomtheme/joomla-cookienotice-plugin/releases/tag/v1.1.3)
@@ -84,7 +88,7 @@ The active Joomla site language is matched first. A base-language mapping such a
 
 After a saved choice, the 48 px cookie icon opens the existing preferences dialog. The icon is embedded from [Bootstrap Icons](https://icons.getbootstrap.com/icons/cookie/) (MIT licensed), with no external dependency. **Cookie Settings Accessible Name** retains the existing `launcher_text` parameter and its language fallback; it now supplies the button's `aria-label` instead of visible text. The saved consent format and categories are unchanged.
 
-Select **Bottom left** (default) or **Bottom right** under **Cookie Settings Icon Position**. The default bottom offset is 72 px to leave space for common fixed accessibility controls. Templates may adjust horizontal and vertical spacing independently:
+Select **Bottom left** (default) or **Bottom right** under **Cookie Settings Icon Position**. The default bottom offset is 16 px, plus the device safe-area inset. Templates may adjust horizontal and vertical spacing independently:
 
 ```css
 :root {
@@ -122,7 +126,9 @@ This plugin supplies technical consent controls; installing it alone does not ma
 
 ## Compatibility
 
-- Designed for Joomla 6.1.x
+- Integration targets: Joomla 6.1.x and 6.2. The 1.1.4 candidate still requires installation and site tests on both versions before a compatibility claim.
+- Atum handles administrator configuration; frontend rendering uses the plugin FileLayout and Web Asset Manager, independent of the site template.
+- Compatible with a Bootstrap 5 site without loading a second Bootstrap library.
 - Vanilla JavaScript; no Bootstrap requirement
 - GPL-2.0-or-later
 

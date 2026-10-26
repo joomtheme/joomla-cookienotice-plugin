@@ -336,7 +336,7 @@
     var returnFocus = null;
 
     function showBanner() {
-      if (banner) {
+      if (banner && !currentState && (!backdrop || backdrop.hidden)) {
         banner.classList.add("show");
       }
     }
@@ -481,10 +481,10 @@
         var first = focusable[0];
         var last = focusable[focusable.length - 1];
 
-        if (event.shiftKey && document.activeElement === first) {
+        if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement) || document.activeElement === dialog)) {
           event.preventDefault();
           last.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
+        } else if (!event.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement) || document.activeElement === dialog)) {
           event.preventDefault();
           first.focus();
         }

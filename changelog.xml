@@ -3,6 +3,16 @@
   <changelog>
     <element>cookienotice</element>
     <type>plugin</type>
+    <version>1.1.4</version>
+    <fix>
+      <item>Lower the settings launcher to 16 px with mobile safe-area spacing.</item>
+      <item>Prevent a delayed banner from reopening after a choice or behind preferences.</item>
+      <item>Keep keyboard navigation inside the preferences dialog on initial focus.</item>
+    </fix>
+  </changelog>
+  <changelog>
+    <element>cookienotice</element>
+    <type>plugin</type>
     <version>1.1.3</version>
     <change>
       <item>Replace the text settings launcher with an accessible inline cookie icon.</item>

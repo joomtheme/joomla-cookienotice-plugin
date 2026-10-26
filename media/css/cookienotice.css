@@ -124,7 +124,7 @@
 .jt-cookie-launcher {
     position: fixed;
     z-index: 9997;
-    bottom: var(--jt-cookie-launcher-y, 72px);
+    bottom: calc(var(--jt-cookie-launcher-y, 16px) + env(safe-area-inset-bottom, 0px));
     display: grid;
     place-items: center;
     width: 48px;
@@ -136,11 +136,11 @@
 }
 
 .jt-cookie-launcher-left {
-    left: var(--jt-cookie-launcher-x, 16px);
+    left: calc(var(--jt-cookie-launcher-x, 16px) + env(safe-area-inset-left, 0px));
 }
 
 .jt-cookie-launcher-right {
-    right: var(--jt-cookie-launcher-x, 16px);
+    right: calc(var(--jt-cookie-launcher-x, 16px) + env(safe-area-inset-right, 0px));
 }
 
 .jt-cookie-launcher svg {
