@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.4 - 2026-10-26
+## 1.1.4 - 2026-10-27
 
 ### Fixed
 
@@ -11,86 +11,5 @@
 ### Compatibility
 
 - Retain Joomla subscriber events, dependency injection, FileLayout and Web Asset Manager integration; no additional Bootstrap runtime.
-- Joomla 6.1.x and 6.2 are integration targets; full installation and site validation remain required before release.
-
-## 1.1.3 - 2026-09-24
-
-### Changed
-
-- Replace the text settings launcher with an inline Bootstrap Icons cookie SVG and keep `launcher_text` as its accessible name.
-- Add bottom-left/bottom-right launcher positioning and CSS x/y offset overrides without changing saved consent or category behavior.
-- Bump manifest and asset versions to 1.1.3 for cache invalidation.
-
-## 1.1.2 - 2026-09-17
-
-### Fixed
-
-- Save and publish the new consent state before cleaning denied-category cookies.
-- Repeat cleanup of saved denied categories on page initialization, before allowed services start. This catches accessible cookies written again during the previous page unload.
-- Match both trailing-slash and non-trailing-slash cookie paths along the current path.
-- Preserve the consent cookie even when a cleanup pattern matches its name.
-- Add Secure to expiry writes on HTTPS.
-- Avoid starting newly allowed services immediately before a withdrawal reload.
-
-### Changed
-
-- Updated manifest and CSS/JS asset versions to 1.1.2.
-- Documented repeated cleanup and the single-integration rule for analytics.
-
-## 1.1.1 - 2026-08-27
-
-### Added
-
-- Language-specific privacy/cookie policy URL mappings for multilingual Joomla sites.
-- Exact Joomla language-tag matching with optional base-language fallback.
-
-### Changed
-
-- The existing privacy/cookie policy URL is now used as a backward-compatible fallback when no language-specific mapping matches.
-- Updated Web Asset Manager metadata to 1.1.1.
-
-### Security and privacy
-
-- Language-specific policy URLs use the same HTTP/HTTPS and relative-URL validation as the global policy URL. Invalid mappings fall back safely.
-
-## 1.1.0 - 2026-08-26
-
-### Added
-
-- Equal first-layer accept and reject actions.
-- Category preferences for necessary, preferences, analytics and marketing services.
-- Consent settings launcher and withdrawal flow.
-- Structured consent record with revision and timestamp.
-- Opt-in category snippet injection.
-- `data-cookie-category` activation for scripts, iframes and images.
-- Configurable cookie cleanup patterns when consent is withdrawn.
-- Public JavaScript API and consent lifecycle events.
-- German and French language files.
-- Keyboard focus management, focus trapping, RTL switches and reduced-motion support.
-
-### Changed
-
-- Moved banner markup from the extension class to a Joomla layout.
-- Replaced the placeholder namespace with the Joomtheme namespace.
-- Made runtime default text language-driven.
-- Always render the lightweight controller so accepted-user page caches cannot suppress the banner for new visitors.
-- Updated Web Asset Manager metadata to 1.1.0.
-
-### Security and privacy
-
-- Non-essential categories default to denied.
-- Unsafe privacy-policy URL schemes remain blocked.
-- Cookie names and consent revisions are validated.
-- Control-character URL validation avoids hexadecimal notation that triggers a JAMSS false positive.
-- Consent withdrawal reloads the page after cleaning configured first-party cookies.
-
-## 1.0.21 - 2026-06-01
-
-- Cleaned up the Support & Contact backend note.
-
-## 1.0.20
-
-- Added JavaScript-side cookie detection.
-- Hardened the privacy-policy URL.
-- Added visible keyboard focus styles.
-- Documented the notice-only legal scope.
+- Confirmed working on Joomla 6.1.4 and 6.2.0 by the maintainer.
+- Existing consent choices, plugin settings and CSS offset overrides are preserved.

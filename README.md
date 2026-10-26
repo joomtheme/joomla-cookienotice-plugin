@@ -1,21 +1,17 @@
 # Smart Cookie Consent for Joomla 6
 
-Smart Cookie Consent is a lightweight consent-management foundation for Joomla 6.1.x. It provides equal first-layer choices, category preferences, consent withdrawal and opt-in activation of managed scripts and embeds.
+Smart Cookie Consent is a lightweight consent-management foundation for Joomla 6.1.x and 6.2.x. It provides equal first-layer choices, category preferences, consent withdrawal and opt-in activation of managed scripts and embeds.
 
-## Development candidate: 1.1.4
+## Current release: 1.1.4
 
-Lowers the launcher to 16 px with safe-area spacing and fixes delayed banner visibility and initial dialog focus trapping. Existing consent and CSS offset overrides are retained. `updates.xml` continues to point to the published 1.1.3 release until a tested 1.1.4 package is published.
+[Download Smart Cookie Consent 1.1.4](https://github.com/joomtheme/joomla-cookienotice-plugin/releases/download/v1.1.4/plg_system_cookienotice_1.1.4.zip) · [Release notes](https://github.com/joomtheme/joomla-cookienotice-plugin/releases/tag/v1.1.4)
 
-## Current release: 1.1.3
+Version 1.1.4 lowers the settings launcher's default bottom spacing from 72 px to 16 px, adds mobile safe-area spacing, prevents delayed banner reappearance, and improves keyboard focus handling in the preferences dialog. Existing consent choices, plugin settings and CSS offset overrides are preserved.
 
-[Download Smart Cookie Consent 1.1.3](https://github.com/joomtheme/joomla-cookienotice-plugin/releases/download/v1.1.3/plg_system_cookienotice_1.1.3.zip) · [Release notes](https://github.com/joomtheme/joomla-cookienotice-plugin/releases/tag/v1.1.3)
-
-Version 1.1.3 introduces an accessible cookie icon launcher with configurable bottom-left/bottom-right positioning and CSS spacing overrides. The consent engine, saved state, cookie cleanup and category behavior are unchanged.
-
-The maintainer confirmed that the release passed JED Checker and site testing, and that updates were received through Joomla's update system. The published ZIP's SHA-256 and all packaged files were also verified against the release commit.
+The maintainer confirmed that the release works on Joomla 6.1.4 and 6.2.0. The published ZIP's SHA-256 was verified against the downloaded release asset.
 
 ```text
-SHA-256: 4d914503356c03fec279c57af874b7f66b57ceb24d1e415b5713b02f0f137a06
+SHA-256: 381f43fbef8b8427ac53462c28c4813f0ec10e99d9039e59e65099fd5434243d
 ```
 
 ## Highlights
@@ -39,7 +35,7 @@ SHA-256: 4d914503356c03fec279c57af874b7f66b57ceb24d1e415b5713b02f0f137a06
 
 ## Installation
 
-1. Download the installable `plg_system_cookienotice_1.1.3.zip` release asset and install it from Joomla Administrator.
+1. Download the installable `plg_system_cookienotice_1.1.4.zip` release asset and install it from Joomla Administrator.
 2. Enable **System - Smart Cookie Consent**.
 3. Set the fallback privacy policy URL. For multilingual sites, add language-specific mappings such as `de-DE=/datenschutz` or `fr-FR=/politique-de-confidentialite`.
 4. Move every non-essential service into the matching category snippet field, or annotate its markup as described below.
@@ -84,7 +80,7 @@ tr-TR=/gizlilik-politikasi
 
 The active Joomla site language is matched first. A base-language mapping such as `de=/datenschutz` is also accepted when no exact `de-DE` mapping exists. Invalid or unsafe URL schemes are ignored and the validated fallback URL is used instead.
 
-## Settings launcher (1.1.3)
+## Settings launcher
 
 After a saved choice, the 48 px cookie icon opens the existing preferences dialog. The icon is embedded from [Bootstrap Icons](https://icons.getbootstrap.com/icons/cookie/) (MIT licensed), with no external dependency. **Cookie Settings Accessible Name** retains the existing `launcher_text` parameter and its language fallback; it now supplies the button's `aria-label` instead of visible text. The saved consent format and categories are unchanged.
 
@@ -99,26 +95,20 @@ Select **Bottom left** (default) or **Bottom right** under **Cookie Settings Ico
 
 The x offset is measured from the selected physical edge, including on RTL pages; the y offset is measured from the bottom. Check the actual accessibility widget and other fixed controls on both desktop and mobile, and increase offsets as needed. The icon remains keyboard focusable and has a visible focus outline; forced-colors mode uses system colors.
 
-### Manual Joomla 6.1.x release checklist
+## Validation
 
-**Completed for 1.1.3 — confirmed by the maintainer on 2026-09-24.**
+- Maintainer-confirmed operation on Joomla 6.1.4 and 6.2.0.
+- Eleven controlled Chromium browser checks passed, covering launcher positioning at desktop and 320 px widths, CSS offset overrides, RTL positioning, initial dialog focus navigation, delayed banner behavior, consent activation, withdrawal and cookie cleanup.
+- PHP and JavaScript syntax checks, release metadata validation, ZIP integrity and deterministic package builds passed.
+- JED Checker and the full cross-browser/accessibility checklist were not rerun for 1.1.4.
 
-- [x] Upgraded from 1.1.2 to 1.1.3; verified existing consent records and plugin settings persist, and the CSS asset loads at version 1.1.3.
-- [x] Tested first-time visits, accept, reject, category preference saving, reopening by mouse and Enter/Space, consent withdrawal and reload; verified category activation and cookie cleanup.
-- [x] Verified custom `launcher_text` accessible names in the relevant languages and the translated default when the field is blank.
-- [x] Tested both launcher corners, LTR/RTL, 320 px mobile width, 200% zoom, landscape, fixed accessibility controls and x/y CSS overrides.
-- [x] Verified Tab focus outline, dialog focus return, Escape, forced-colors/high-contrast mode and reduced-motion preference.
-- [x] Passed JED Checker and verified installation/update and frontend behavior on the Joomla demo site.
+## Updating
 
-These checks record the maintainer's 1.1.3 site tests and can be repeated for future releases.
+Use Joomla's extension update system or install the 1.1.4 release ZIP over the existing installation. Existing plugin settings and valid category-based consent choices are retained. Clear Joomla, page and CDN caches after updating, and confirm the CSS/JS assets load at version 1.1.4.
 
-## Updating from 1.1.2
+The launcher's default bottom spacing is now 16 px plus the device safe-area inset. Existing `--jt-cookie-launcher-x` and `--jt-cookie-launcher-y` overrides still apply, with the corresponding safe-area inset added.
 
-Use Joomla's extension update system or install the 1.1.3 release ZIP over the existing installation. Existing plugin settings and valid consent choices are retained. The existing `launcher_text` value now supplies the icon button's accessible name. Clear page/CDN caches after updating and confirm the CSS/JS assets load with version 1.1.3.
-
-## Updating from 1.0.x
-
-Version 1.1.0 stores structured, category-based consent. The old acknowledgement value is not treated as valid consent, so visitors will be asked to choose again. Existing plugin parameters are retained by Joomla during an upgrade.
+Legacy acknowledgement-only choices from 1.0.x do not count as category-based consent; those visitors will be asked to choose again.
 
 ## Compliance scope
 
@@ -126,25 +116,21 @@ This plugin supplies technical consent controls; installing it alone does not ma
 
 ## Compatibility
 
-- Integration targets: Joomla 6.1.x and 6.2. The 1.1.4 candidate still requires installation and site tests on both versions before a compatibility claim.
+- Designed for Joomla 6.1.x and 6.2.x; confirmed working on Joomla 6.1.4 and 6.2.0 by the maintainer.
 - Atum handles administrator configuration; frontend rendering uses the plugin FileLayout and Web Asset Manager, independent of the site template.
 - Compatible with a Bootstrap 5 site without loading a second Bootstrap library.
 - Vanilla JavaScript; no Bootstrap requirement
 - GPL-2.0-or-later
 
 
-## Cookie cleanup in 1.1.2
+## Cookie cleanup
 
-Withdrawal saves the new consent record before emitting the change event and cleaning accessible cookies in denied categories. The page then reloads. On initialization, a valid saved decision triggers another cleanup of denied categories before allowed content is activated. This second pass addresses accessible cookies that previously loaded services may write during unload. It also cleans leftovers when upgrading an existing denied decision from 1.1.1. Startup cleanup does not cause a reload loop.
+Withdrawal saves the new consent record before emitting the change event and cleaning accessible cookies in denied categories. The page then reloads. On initialization, a valid saved decision triggers another cleanup of denied categories before allowed content is activated. This second pass addresses accessible cookies that previously loaded services may write during unload. Startup cleanup does not cause a reload loop.
 
 Cleanup still relies on cookie names visible in document.cookie and configured category-specific patterns. Paths along the current URL are attempted with and without trailing slashes. The plugin's own consent cookie is excluded. HttpOnly cookies, other origins, inaccessible paths and other storage partitions remain outside this JavaScript cleanup. This is not a continuous blocker for scripts independently loaded outside consent control; all integrations must respect the saved choice. Avoid overlapping category patterns: a cookie matching a denied category is eligible for deletion even if an allowed category also uses it.
 
 Use one integration method per service: either the category snippet field OR annotated template/module markup. Do not add the same GA loader to both. Google Analytics measurement configuration and loading should belong to the same consent-controlled integration. Removing an already executed script element does not stop its existing listeners; the reload and subsequent cleanup remain necessary.
 
-Version 1.1.2 is a patch update: the consent schema and revision are unchanged. Existing valid choices are retained. The reset() API continues to remove the consent record and reopen the choice on reload; use the preference controls to withdraw consent and invoke the withdrawal cleanup flow.
-
-### Historical validation: 1.1.2
-
-The 1.1.2 development checks reported 17/17 controlled JavaScript scenarios passing with a simulated cookie jar and DOM/API stubs, including the late-write cleanup regression. XML/JSON, manifest paths, language key parity and asset versions were checked. These results describe the 1.1.2 cleanup work; they are not a claim that every browser or integration has been tested.
+The consent schema and revision are unchanged in 1.1.4. Existing valid choices are retained. The reset() API continues to remove the consent record and reopen the choice on reload; use the preference controls to withdraw consent and invoke the withdrawal cleanup flow.
 
 For site-specific regression testing, accept Analytics, then withdraw consent and reload. Verify that accessible `_ga` and `_ga_*` cookies are removed, consent remains denied, and allowed categories retain their cookies. Repeat on non-trailing-slash paths and in Firefox, using a single consent-controlled analytics integration.

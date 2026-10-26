@@ -9,84 +9,9 @@
       <item>Prevent a delayed banner from reopening after a choice or behind preferences.</item>
       <item>Keep keyboard navigation inside the preferences dialog on initial focus.</item>
     </fix>
-  </changelog>
-  <changelog>
-    <element>cookienotice</element>
-    <type>plugin</type>
-    <version>1.1.3</version>
     <change>
-      <item>Replace the text settings launcher with an accessible inline cookie icon.</item>
-      <item>Add configurable bottom-left and bottom-right launcher positions and CSS offset overrides.</item>
-      <item>Update manifest and asset versions to 1.1.3.</item>
+      <item>Confirmed working on Joomla 6.1.4 and 6.2.0 by the maintainer.</item>
+      <item>Existing consent choices, plugin settings and CSS offset overrides are preserved.</item>
     </change>
-  </changelog>
-  <changelog>
-    <element>cookienotice</element>
-    <type>plugin</type>
-    <version>1.1.2</version>
-    <fix>
-      <item>Save the new consent state before cleaning denied-category cookies.</item>
-      <item>Repeat cleanup for saved denied categories on page initialization to remove accessible cookies written during the previous page unload.</item>
-      <item>Attempt both trailing-slash and non-trailing-slash paths and protect the consent record from cleanup patterns.</item>
-      <item>Use Secure expiry writes on HTTPS and avoid activating new services immediately before withdrawal reload.</item>
-    </fix>
-    <change>
-      <item>Updated manifest and CSS/JS asset versions to 1.1.2.</item>
-    </change>
-  </changelog>
-  <changelog>
-    <element>cookienotice</element>
-    <type>plugin</type>
-    <version>1.1.1</version>
-    <addition>
-      <item>Added language-specific privacy and cookie policy URL mappings for multilingual Joomla sites.</item>
-      <item>Added exact language-tag matching with optional base-language fallback.</item>
-    </addition>
-    <change>
-      <item>The existing policy URL remains the backward-compatible fallback when no language-specific mapping matches.</item>
-      <item>Updated Web Asset Manager metadata to 1.1.1.</item>
-    </change>
-    <security>
-      <item>Language-specific policy URLs use the same validated relative or HTTP/HTTPS URL handling as the global fallback.</item>
-    </security>
-  </changelog>
-  <changelog>
-    <element>cookienotice</element>
-    <type>plugin</type>
-    <version>1.1.0</version>
-    <addition>
-      <item>Added accept all, reject all and category preference controls.</item>
-      <item>Added consent withdrawal, script activation hooks and cookie cleanup patterns.</item>
-      <item>Added a public JavaScript API, lifecycle events, German and French translations.</item>
-    </addition>
-    <change>
-      <item>Moved frontend markup into a Joomla layout.</item>
-      <item>Made consent state handling cache and CDN safe.</item>
-      <item>Updated the extension namespace and Web Asset Manager metadata.</item>
-    </change>
-    <security>
-      <item>Non-essential consent categories now default to denied.</item>
-      <item>Validated cookie names, consent revisions and privacy-policy URL schemes.</item>
-      <item>Adjusted control-character URL validation to avoid a JAMSS hexadecimal-notation false positive.</item>
-    </security>
-  </changelog>
-  <changelog>
-    <element>cookienotice</element>
-    <type>plugin</type>
-    <version>1.0.21</version>
-    <change>
-      <item>Cleaned up the Support and Contact backend note.</item>
-    </change>
-  </changelog>
-  <changelog>
-    <element>cookienotice</element>
-    <type>plugin</type>
-    <version>1.0.20</version>
-    <addition>
-      <item>Added JavaScript-side cookie detection and visible keyboard focus styles.</item>
-    </addition>
-    <fix>
-      <item>Hardened the privacy-policy URL field.</item>
-    </fix>
   </changelog>
 </changelogs>
